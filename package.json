@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.11.1",
+    "@clerk/clerk-sdk-node": "^5.0.50",
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -33,6 +34,7 @@
     "@hookform/resolvers": "^3.6.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
+    "@netlify/functions": "^2.8.2",
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.0",
