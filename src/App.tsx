@@ -1,4 +1,3 @@
-import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RootLayout from '@/components/RootLayout.tsx'
 import DashboardLayout from '@/components/DashboardLayout.tsx'
@@ -26,11 +25,7 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  return (
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
