@@ -11,6 +11,8 @@ type RetrieveError = {
 
 type RetrieveSuccess = {
   n8nApiKey: string
+  userId: string
+  n8nMainWorkflowId: string
 }
 
 type Params = {
@@ -31,6 +33,7 @@ export default async (params: Params): Promise<Result<RetrieveSuccess, RetrieveE
   try {
     const decoded = await clerkClient.verifyToken(token)
 
+
     // Token is valid, you can now access user information
     const userId = decoded.sub
 
@@ -47,10 +50,13 @@ export default async (params: Params): Promise<Result<RetrieveSuccess, RetrieveE
     return {
       success: true,
       data: {
-        n8nApiKey: privateMetadata.n8nApiKey as string
+        userId,
+        n8nApiKey: privateMetadata.n8nApiKey as string,
+        n8nMainWorkflowId: privateMetadata.n8nMainWorkflowId as string
       }
     }
   } catch (error) {
+    console.log('Failed to verify token with error', error)
     return {success: false, error: {message: 'Failed verifying user token', statusCode: 500}}
   }
 }
