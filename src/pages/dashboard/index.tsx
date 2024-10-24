@@ -12,6 +12,7 @@ type Workflow = {
   name: string
   description: string
   fields: FieldSet[]
+  status?: string
 }
 
 const BASE_URL = 'http://localhost:8888/.netlify/functions'
@@ -30,7 +31,7 @@ export default function DashboardPage() {
       <ul>
         {userWorkflows.map((workflow) => (
           <li key={workflow.id}>
-            {workflow.name}
+            {workflow.name} - {workflow.status}
             <form method="POST" onSubmit={deleteWorkflow}>
               <input type="hidden" name="workflowId" value={workflow.id} />
               <button type="submit">Delete</button>
@@ -109,7 +110,7 @@ export default function DashboardPage() {
       formFields.push({ id, value })
     }
 
-    await fetch(`${BASE_URL}/activateWorkflow`, {
+    const response = await fetch(`${BASE_URL}/activateWorkflow`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -120,7 +121,10 @@ export default function DashboardPage() {
       }),
     })
 
-    fetchWorkflows()
+    if (response.ok) {
+      event.target.reset()
+      fetchWorkflows()
+    }
   }
 
   const deleteWorkflow = async (event: any) => {
