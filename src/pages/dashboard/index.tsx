@@ -18,51 +18,8 @@ const BASE_URL = 'http://localhost:8888/.netlify/functions'
 
 export default function DashboardPage() {
   const { getToken } = useAuth()
-  const [token, setToken] = useState<string>()
   const [userWorkflows, setUserWorkflows] = useState<Workflow[]>([])
   const [workflows, setWorkflows] = useState<Workflow[]>([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = await getToken()
-
-      if (!token) return
-
-      setToken(token)
-    }
-
-    fetchData()
-  }, [getToken, setToken])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      fetch(`${BASE_URL}/getUserWorkflows`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          setUserWorkflows(json)
-        })
-
-      fetch(`${BASE_URL}/getWorkflows`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((json) => {
-          setWorkflows(json)
-        })
-    }
-
-    if (!token) return
-
-    fetchData()
-  }, [token])
 
   const renderUserWorkflows = () => {
     if (!userWorkflows) {
@@ -72,7 +29,13 @@ export default function DashboardPage() {
     return (
       <ul>
         {userWorkflows.map((workflow) => (
-          <li key={workflow.id}>{workflow.name}</li>
+          <li key={workflow.id}>
+            {workflow.name}
+            <form method="POST" onSubmit={deleteWorkflow}>
+              <input type="hidden" name="workflowId" value={workflow.id} />
+              <button type="submit">Delete</button>
+            </form>
+          </li>
         ))}
       </ul>
     )
@@ -108,8 +71,35 @@ export default function DashboardPage() {
     )
   }
 
+  const fetchWorkflows = async () => {
+    const token = await getToken()
+
+    fetch(`${BASE_URL}/getUserWorkflows`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setUserWorkflows(json)
+      })
+
+    fetch(`${BASE_URL}/getWorkflows`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setWorkflows(json)
+      })
+  }
+
   const activateWorkflow = async (event: any) => {
     event.preventDefault()
+    const token = await getToken()
     const formData = new FormData(event.target) // Create FormData object
 
     const formFields = []
@@ -129,7 +119,42 @@ export default function DashboardPage() {
         fields: formFields,
       }),
     })
+
+    fetchWorkflows()
   }
+
+  const deleteWorkflow = async (event: any) => {
+    event.preventDefault()
+    const token = await getToken()
+    const formData = new FormData(event.target) // Create FormData object
+
+    const formFields = []
+    const workflowId = formData.get('workflowId')
+    for (const [id, value] of formData.entries()) {
+      if (id === 'workflowId') continue
+      formFields.push({ id, value })
+    }
+
+    await fetch(`${BASE_URL}/deleteWorkflow`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        workflowId,
+      }),
+    })
+
+    fetchWorkflows()
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchWorkflows()
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <>
