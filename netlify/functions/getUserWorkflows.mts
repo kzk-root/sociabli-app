@@ -3,6 +3,10 @@ import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 
 const API_ENDPOINT = 'https://smoggy-rosabelle-konzentrik-754b049a.koyeb.app/api/v1'
 
+type Workflow = {
+  id: string
+  name: string
+}
 export default async (request: Request, _context: Context) => {
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })
 
@@ -20,8 +24,15 @@ export default async (request: Request, _context: Context) => {
     })
 
     const data = await response.json()
-    const workflowList = data.data.filter((workflow: any) => {
-      return !workflow.tags.find((child: any) => child.name === 'hideInUi')
+    const workflowList: Workflow[] = []
+
+    data.data.forEach((workflow: any) => {
+      if (!workflow.tags.find((child: any) => child.name === 'hideInUi')) {
+        workflowList.push({
+          id: workflow.id,
+          name: workflow.name.replace(` - ${retrievePrivateMetadataResult.data.userId}`, ''),
+        })
+      }
     })
 
     return Response.json(workflowList)
