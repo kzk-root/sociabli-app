@@ -1,12 +1,10 @@
 import { Context } from '@netlify/functions'
 import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 
-const N8N_ACTIVATE_WEBHOOK_ENDPOINT = 'https://smoggy-rosabelle-konzentrik-754b049a.koyeb.app/webhook-test/13ff4a5c-1da0-4702-98c5-eafae350bece'
-
 export default async (request: Request, _context: Context) => {
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })
-
   if(!retrievePrivateMetadataResult.success) {
+
     return Response.json({ message: retrievePrivateMetadataResult.error.message }, { status: retrievePrivateMetadataResult.error.statusCode })
   }
 
@@ -20,16 +18,21 @@ export default async (request: Request, _context: Context) => {
     //   - look up all user workflows and filter out Main Workflow
     //   - add new Medium Workflow to be triggered in Main Workflow
 
-    // TODO: get fields from request
+    const requestBody = await request.json()
 
-    await fetch(N8N_ACTIVATE_WEBHOOK_ENDPOINT, {
+    const headers = new Headers()
+    headers.set('Content-Type', 'application/json')
+    headers.set('Authorization', process.env.N8N_SECRET || '')
+
+   await fetch(`${process.env.N8N_WEBHOOK_URL}/activate-workflow`, {
       method: "POST",
+      headers,
       body: JSON.stringify({
+        userId: retrievePrivateMetadataResult.data.userId,
         n8nApiKey: retrievePrivateMetadataResult.data.n8nApiKey,
-        workflowId: 'blog_to_medium',
-        fields: [
-          {id: 'mediumAccessToken', value:"some_token"},
-        ],
+        n8nMainWorkflowId: retrievePrivateMetadataResult.data.n8nMainWorkflowId,
+        workflowId: requestBody.workflowId,
+        fields: requestBody.fields,
       }),
     })
 
