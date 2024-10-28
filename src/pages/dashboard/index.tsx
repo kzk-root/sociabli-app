@@ -188,7 +188,7 @@ export default function DashboardPage() {
       <section>
         <h1>Dashboard</h1>
         <p className="intro" data-tippy-content={'hallo welt'}>
-          This is your personal dashboard. See all available workflows and the once you activated.
+          See all available workflows and the once you activated.
         </p>
       </section>
       <h2>Your workflows</h2>
