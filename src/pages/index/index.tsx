@@ -1,24 +1,14 @@
-import { Link } from 'react-router-dom'
-
 export default function IndexPage() {
   return (
-    <div>
-      <h1>This is the index page</h1>
-      <div>
-        <ul>
-          <li>
-            <Link to="/sign-up">Sign Up</Link>
-          </li>
-          <li>
-            <Link to="/sign-in">Sign In</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-        </ul>
+    <div className="huge-teaser">
+      <div className="hero"></div>
+      <div className="hero hero2"></div>
+      <div className="content">
+        <h1>CrossPoster</h1>
+        <h2>Connect platforms and services to automatically post your content</h2>
+        <a href="/sign-up" className="btn btn-primary">
+          Join beta phase
+        </a>
       </div>
     </div>
   )

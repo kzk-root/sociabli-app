@@ -1,0 +1,140 @@
+.dashboard {
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    details {
+        margin: var(--default-margin);
+        background-color: #f1f1f1;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+
+        summary {
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        p {
+            margin: 0.5rem 0;
+            color: #444444;
+            font-size: 1.1rem;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .animated-details {
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .animated-details[open] {
+      max-height: 500px; /* Adjust to your content’s approximate max height */
+    }
+
+    .animated-details:not([open]) {
+        max-height: 3rem;
+    }
+
+    .user-workflows {
+        li {
+            display: grid;
+            gap: 1rem;
+            align-items: center;
+            grid-template-columns: 20px 1fr auto;
+            margin: var(--default-margin);
+            background-color: #f1f1f1;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        .status {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+
+            &.running {
+                background-color: #00aaff;
+                background: linear-gradient(0deg, #00aaff 0%, #00eeff 100%);
+                border: 1px solid #00aaff;
+            }
+
+            &.success {
+                background-color: #00ff00;
+                background: linear-gradient(0deg, #009900 0%, #00ff00 100%);
+                border: 1px solid #00ff00;
+            }
+
+            &.error {
+                background-color: #ff0000;
+                background: linear-gradient(0deg, #990000 0%, #ff0000 100%);
+                border: 1px solid #990000;
+            }
+        }
+
+        .delete {
+            background-color: #cc0000;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: small;
+        }
+    }
+
+    .no-data {
+        margin: var(--default-margin);
+        padding: 1rem;
+        background-color: #fff1f1;
+        border-radius: 0.5rem;
+    }
+
+    form {
+        gap: 1rem;
+        margin: var(--default-margin) 0;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        justify-self: start;
+
+        svg {
+            display: inline;
+            width: 1rem;
+            color: #6666aa;
+            position: relative;
+            top: -0.35rem;
+            left: -0.2rem;
+        }
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #ccc;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: none;
+        background-color: #333;
+        color: white;
+        cursor: pointer;
+    }
+}

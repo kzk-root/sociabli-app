@@ -15,13 +15,38 @@ export default async (request: Request, _context: Context) => {
     await clerkClient.verifyToken(token)
 
     const workflowList = [
-      { 'name' : 'Weblog to Medium', description: 'Each blog entry will be published on Medium', 'id': 'blog_to_medium', fields: [
-          {id: 'mediumAccessToken', name:"Medium Token"},
-        ]},
-      { 'name' : 'Bluesky to Mastodon', description: 'Sync your Bluesky posts to Mastodon', 'id': 'bluesky_to_mastodon', fields: [
-          {id: 'blueSkyAccessToken', name:"BlueSky Token", type: "password"},
-          {id: 'mastodonAccessToken', name:"Mastodon Token", type: "password"},
-        ]},
+      {
+        name: 'Weblog to Medium',
+        description: 'Each blog entry will be published on Medium',
+        id: 'blog_to_medium',
+        fields: [
+          {
+            id: 'mediumAccessToken',
+            name: 'Medium Token',
+            type: 'password',
+            description: 'You can get your token from https://medium.com/me/settings',
+          },
+        ],
+      },
+      {
+        name: 'Bluesky to Mastodon',
+        description: 'Sync your Bluesky posts to Mastodon',
+        id: 'bluesky_to_mastodon',
+        fields: [
+          {
+            id: 'blueSkyAccessToken',
+            name: 'BlueSky Token',
+            type: 'password',
+            description: 'You can get your token from https://bluesky.com/settings',
+          },
+          {
+            id: 'mastodonAccessToken',
+            name: 'Mastodon Token',
+            type: 'password',
+            description: 'You can get your token from https://mastodon.com/settings',
+          },
+        ],
+      },
     ]
 
     return Response.json(workflowList)

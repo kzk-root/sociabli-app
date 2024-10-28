@@ -11,22 +11,27 @@ export default function RootLayout() {
       routerReplace={(to) => navigate(to, { replace: true })}
       publishableKey={EnvVars.clerkPublishableKey}
     >
-      <header className="header">
-        <div>
-          <div>
-            <p>Clerk + React + React Router App</p>
-          </div>
+      <header className="page">
+        <nav>
+          <Link to="/">Crossposter</Link>
           <SignedIn>
+            <Link to="/dashboard">Dashboard</Link>
             <UserButton />
           </SignedIn>
           <SignedOut>
             <Link to="/sign-in">Sign In</Link>
           </SignedOut>
-        </div>
+        </nav>
       </header>
       <main>
         <Outlet />
       </main>
+
+      <footer>
+        <a href={'#'}>Privacy Policy</a>
+        <a href={'#'}>Terms of Service</a>
+        <a href={'#'}>Contact</a>
+      </footer>
     </ClerkProvider>
   )
 }

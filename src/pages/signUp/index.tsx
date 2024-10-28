@@ -1,5 +1,11 @@
 import { SignUp } from '@clerk/clerk-react'
 
 export default function SignUpPage() {
-  return <SignUp path="/sign-up" />
+  return (
+    <div className="container dashboard">
+      <div className="centered">
+        <SignUp path="/sign-up" />
+      </div>
+    </div>
+  )
 }

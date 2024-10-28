@@ -1,5 +1,5 @@
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
+@import "css/reset.css";
+@import "css/variables.css";
+@import "css/headers.css";
+@import "css/base.css";
+@import "css/dashboard.css";
