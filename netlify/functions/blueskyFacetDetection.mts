@@ -21,7 +21,7 @@ export default async (request: Request) => {
 
     return Response.json({
       text: richText.text,
-      facets: richText.facets,
+      facets: richText.facets || {},
     })
   } catch (error) {
     console.log(error)
