@@ -6,7 +6,7 @@ export default async (request: Request) => {
     const authHeader = request.headers.get('Authorization')
     const token = authHeader && authHeader.split(' ')[1]
 
-    if (process.env.CLERK_TOKEN !== token) {
+    if (process.env.N8N_RECEIVE_TOKEN !== token) {
       return Response.json({ message: 'No token provided' }, { status: 401 })
     }
 
