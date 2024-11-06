@@ -3,9 +3,11 @@ import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 
 export default async (request: Request, _context: Context) => {
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })
-  if(!retrievePrivateMetadataResult.success) {
-
-    return Response.json({ message: retrievePrivateMetadataResult.error.message }, { status: retrievePrivateMetadataResult.error.statusCode })
+  if (!retrievePrivateMetadataResult.success) {
+    return Response.json(
+      { message: retrievePrivateMetadataResult.error.message },
+      { status: retrievePrivateMetadataResult.error.statusCode }
+    )
   }
 
   try {
@@ -24,20 +26,31 @@ export default async (request: Request, _context: Context) => {
     headers.set('Content-Type', 'application/json')
     headers.set('Authorization', process.env.N8N_SECRET || '')
 
-   await fetch(`${process.env.N8N_WEBHOOK_URL}/activate-workflow`, {
-      method: "POST",
+    const fields = requestBody.fields.reduce(
+      (acc: Record<string, string>, field: { id: string; value: string }) => {
+        return {
+          ...acc,
+          [field.id]: field.value,
+        }
+      },
+      {}
+    )
+
+    await fetch(`${process.env.N8N_WEBHOOK_URL}/activate-workflow`, {
+      method: 'POST',
       headers,
       body: JSON.stringify({
         userId: retrievePrivateMetadataResult.data.userId,
         n8nApiKey: retrievePrivateMetadataResult.data.n8nApiKey,
         n8nMainWorkflowId: retrievePrivateMetadataResult.data.n8nMainWorkflowId,
         workflowId: requestBody.workflowId,
-        fields: requestBody.fields,
+        fields,
       }),
     })
 
-    return Response.json({}, {status: 200})
+    return Response.json({}, { status: 200 })
   } catch (error) {
+    console.log(error)
     return Response.json({ error: 'Failed fetching data' }, { status: 500 })
   }
 }

@@ -25,6 +25,7 @@
     "stagelinter": "lint-staged"
   },
   "dependencies": {
+    "@atproto/api": "^0.13.14",
     "@clerk/clerk-react": "^5.11.1",
     "@clerk/clerk-sdk-node": "^5.0.50",
     "@emotion/css": "^11.11.2",
