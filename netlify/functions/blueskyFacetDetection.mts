@@ -17,7 +17,7 @@ export default async (request: Request) => {
     const blueskyAgent = new BskyAgent({ service: 'https://bsky.social' })
 
     const contentSnippet = requestBody.contentSnippet
-    const richText = new RichText({ text: contentSnippet })
+    const richText = new RichText({ text: contentSnippet.replace(/\|\|/g, '\n') })
     await richText.detectFacets(blueskyAgent)
 
     console.log({
@@ -26,7 +26,7 @@ export default async (request: Request) => {
     })
 
     return Response.json({
-      text: richText.text,
+      text: richText.text.replace(/\n/g, '||'),
       facets: richText.facets || [],
     })
   } catch (error) {
