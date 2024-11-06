@@ -17,13 +17,11 @@ export default async (request: Request) => {
     const blueskyAgent = new BskyAgent({ service: 'https://bsky.social' })
 
     const contentSnippet = requestBody.contentSnippet
-    const contentSnippetEscaped = contentSnippet.replace('\n', '\\n')
-    const richText = new RichText({ text: contentSnippetEscaped })
+    const richText = new RichText({ text: contentSnippet })
     await richText.detectFacets(blueskyAgent)
 
     console.log({
       contentSnippet,
-      contentSnippetEscaped,
       richText: richText.text,
     })
 
