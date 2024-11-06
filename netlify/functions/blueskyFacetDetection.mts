@@ -6,8 +6,14 @@ export default async (request: Request) => {
     const authHeader = request.headers.get('Authorization')
     const token = authHeader && authHeader.split(' ')[1]
 
-    if (process.env.N8N_RECEIVE_TOKEN !== token) {
+    if (!token) {
+      console.log('No token provided')
       return Response.json({ message: 'No token provided' }, { status: 401 })
+    }
+
+    if (process.env.N8N_RECEIVE_TOKEN !== token) {
+      console.log('token', token, process.env.N8N_RECEIVE_TOKEN)
+      return Response.json({ message: 'Wrong provided' }, { status: 401 })
     }
 
     const blueskyAgent = new BskyAgent({ service: 'https://bsky.social' })
