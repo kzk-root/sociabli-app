@@ -17,12 +17,31 @@ type Workflow = {
   status?: string
 }
 
+type UserData = {
+  path: string
+  credential: string
+}
+
 const BASE_URL = 'http://localhost:8888/.netlify/functions'
 
 export default function DashboardPage() {
   const { getToken } = useAuth()
   const [userWorkflows, setUserWorkflows] = useState<Workflow[]>([])
   const [workflows, setWorkflows] = useState<Workflow[]>([])
+  const [userData, setUserData] = useState<UserData>()
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text)
+    const msg = document.querySelector('.msg')
+
+    if (msg) {
+      msg.classList.add('show')
+
+      msg.addEventListener('animationend', () => {
+        msg.classList.remove('show')
+      })
+    }
+  }
 
   const renderUserWorkflows = () => {
     if (!userWorkflows || userWorkflows.length === 0) {
@@ -93,6 +112,60 @@ export default function DashboardPage() {
         ))}
       </ul>
     )
+  }
+
+  const renderUserData = () => {
+    if (!userData) {
+      return <div className={'no-data'}>No available workflows. Come back soon.</div>
+    }
+
+    return (
+      <>
+        <label htmlFor="path" data-tippy-content="Click to Copy">
+          WebhookId
+          <Tippy content="Click to Copy to clipboard" placement="top-start">
+            <input
+              type="text"
+              value={userData.path}
+              name="path"
+              readOnly={true}
+              onClick={() => {
+                copyToClipboard(userData.path)
+              }}
+            />
+          </Tippy>
+        </label>
+        <label htmlFor="token" data-tippy-content="Click to Copy">
+          Token
+          <Tippy content="Click to Copy to clipboard" placement="top-start">
+            <input
+              type="text"
+              value={userData.credential}
+              name="token"
+              readOnly={true}
+              onClick={() => {
+                copyToClipboard(userData.credential)
+              }}
+            />
+          </Tippy>
+        </label>
+      </>
+    )
+  }
+
+  const fetchUserData = async () => {
+    const token = await getToken()
+
+    fetch(`${BASE_URL}/getUserData`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setUserData(json)
+      })
   }
 
   const fetchWorkflows = async () => {
@@ -178,6 +251,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       await fetchWorkflows()
+      await fetchUserData()
     }
 
     fetchData()
@@ -185,14 +259,25 @@ export default function DashboardPage() {
 
   return (
     <div className="container dashboard">
+      <div className="msg">Copied</div>
       <section>
         <h1>Dashboard</h1>
         <p className="intro" data-tippy-content={'hallo welt'}>
           See all available workflows and the once you activated.
         </p>
       </section>
+
       <h2>Your workflows</h2>
       {renderUserWorkflows()}
+
+      <div className={'credentials'}>
+        <h2>Webhook</h2>
+
+        <details className="animated-details">
+          <summary>Your Webhook credentials</summary>
+          <div>{renderUserData()}</div>
+        </details>
+      </div>
 
       <h2>Available workflows</h2>
       {renderWorkflow()}

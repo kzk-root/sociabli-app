@@ -1,4 +1,43 @@
 .dashboard {
+    .msg {
+        transition: bottom 0.5s ease-in-out;
+        position: fixed;
+        bottom: -100px;
+        right: 10px;
+        width: 300px;
+        margin: var(--default-margin);
+        padding: 1rem;
+        background-color: lightgreen;
+        border-radius: 0.5rem;
+        text-align: center;
+
+        &.show {
+             animation: showAndHideAgain 1.5s;
+        }
+    }
+
+    section {
+        background-color: #f1f1f1;
+        padding: 3rem;
+        border-radius: 1rem;
+    }
+
+    .credentials {
+        margin: 3rem 0;
+
+        details div {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr 1fr;
+            margin: 1rem 0;
+
+            label {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+
     ul {
         list-style-type: none;
         padding: 0;
@@ -137,5 +176,20 @@
         background-color: #333;
         color: white;
         cursor: pointer;
+    }
+}
+
+@keyframes showAndHideAgain {
+    0% {
+        bottom: -100px;
+    }
+    10% {
+        bottom: 50px;
+    }
+    90% {
+        bottom: 50px;
+    }
+    100% {
+        bottom: -100px;
     }
 }
