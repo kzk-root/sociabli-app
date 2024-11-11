@@ -47,9 +47,12 @@ const getWorkflowExecutions = async (
 }
 
 export default async (request: Request, _context: Context) => {
+  console.log('[getUserWorkflows] Start')
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })
 
   if (retrievePrivateMetadataResult.success === false) {
+    console.log('[getUserWorkflows] Get failed', retrievePrivateMetadataResult.error.error)
+
     return Response.json(
       { message: retrievePrivateMetadataResult.error.message },
       { status: retrievePrivateMetadataResult.error.statusCode }
@@ -65,6 +68,7 @@ export default async (request: Request, _context: Context) => {
       headers: customHeaders,
     })
 
+    console.log('[getUserWorkflows] Prepare workflows')
     const data = await response.json()
     const workflowList: Workflow[] = []
 
@@ -92,6 +96,11 @@ export default async (request: Request, _context: Context) => {
 
     return Response.json(workflowList)
   } catch (error) {
-    return Response.json({ error: 'Failed fetching data' }, { status: 500 })
+    console.error('[getUserWorkflows] Error thrown', error)
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+    return Response.json(
+      { error: `Failed fetching user workflows: ${errorMessage}` },
+      { status: 500 }
+    )
   }
 }

@@ -4,15 +4,19 @@ import { createClerkClient } from '@clerk/clerk-sdk-node'
 const clerkClient = createClerkClient({ secretKey: process.env.CLERK_TOKEN })
 
 export default async (request: Request, _context: Context) => {
+  console.log('[getWorkflows] Start')
+
   const authHeader = request.headers.get('Authorization')
   const token = authHeader && authHeader.split(' ')[1]
 
   if (!token) {
+    console.log('[getWorkflows] Abort: No token provided')
     return Response.json({ message: 'No token provided' }, { status: 401 })
   }
 
   try {
     await clerkClient.verifyToken(token)
+    console.log('[getWorkflows] Token verified')
 
     const workflowList = [
       {
@@ -63,6 +67,7 @@ export default async (request: Request, _context: Context) => {
 
     return Response.json(workflowList)
   } catch (error) {
+    console.log('[getWorkflows] Failed fetching data', error)
     return Response.json({ error: 'Failed fetching data' }, { status: 500 })
   }
 }

@@ -5,6 +5,7 @@ type Result<T, E> = { success: true; data: T } | { success: false; error: E }
 type RetrieveError = {
   message: string
   statusCode: number
+  error?: unknown
 }
 export type MainWebhook = {
   path: string
@@ -59,6 +60,9 @@ export default async (params: Params): Promise<Result<RetrieveSuccess, RetrieveE
     }
   } catch (error) {
     console.log('Failed to verify token with error', error)
-    return { success: false, error: { message: 'Failed verifying user token', statusCode: 500 } }
+    return {
+      success: false,
+      error: { message: 'Failed verifying user token', statusCode: 500, error },
+    }
   }
 }
