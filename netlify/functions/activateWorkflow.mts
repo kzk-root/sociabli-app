@@ -1,5 +1,6 @@
 import { Context } from '@netlify/functions'
 import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
+import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 
 export default async (request: Request, _context: Context) => {
   console.log('[activateWorkflow] Start')
@@ -28,7 +29,7 @@ export default async (request: Request, _context: Context) => {
 
     const headers = new Headers()
     headers.set('Content-Type', 'application/json')
-    headers.set('Authorization', process.env.N8N_SECRET || '')
+    headers.set('Authorization', FunctionEnvVars.n8nSecret)
 
     const fields = requestBody.fields.reduce(
       (acc: Record<string, string>, field: { id: string; value: string }) => {
@@ -40,7 +41,7 @@ export default async (request: Request, _context: Context) => {
       {}
     )
 
-    await fetch(`${process.env.N8N_WEBHOOK_URL}/activate-workflow`, {
+    await fetch(`${FunctionEnvVars.n8nWebhookUrl}/activate-workflow`, {
       method: 'POST',
       headers,
       body: JSON.stringify({

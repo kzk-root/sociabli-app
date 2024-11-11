@@ -1,7 +1,8 @@
 import { Context } from '@netlify/functions'
 import { createClerkClient } from '@clerk/clerk-sdk-node'
+import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 
-const clerkClient = createClerkClient({ secretKey: process.env.CLERK_TOKEN })
+const clerkClient = createClerkClient({ secretKey: FunctionEnvVars.clerkToken })
 
 export default async (request: Request, _context: Context) => {
   console.log('[getWorkflows] Start')

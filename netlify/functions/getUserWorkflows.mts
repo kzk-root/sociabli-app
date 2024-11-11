@@ -1,5 +1,6 @@
 import { Context } from '@netlify/functions'
 import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
+import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 
 type Workflow = {
   id: string
@@ -33,7 +34,7 @@ const getWorkflowExecutions = async (
     customHeaders.set('X-N8N-API-KEY', n8nApiKey)
 
     const response = await fetch(
-      process.env.N8N_API_URL + `/executions?workflowId=${workflowId}&limit=1`,
+      FunctionEnvVars.n8nApiUrl + `/executions?workflowId=${workflowId}&limit=1`,
       {
         method: 'GET',
         headers: customHeaders,
@@ -63,7 +64,7 @@ export default async (request: Request, _context: Context) => {
     const customHeaders = new Headers()
     customHeaders.set('X-N8N-API-KEY', retrievePrivateMetadataResult.data.n8nApiKey)
 
-    const response = await fetch(process.env.N8N_API_URL + '/workflows', {
+    const response = await fetch(FunctionEnvVars.n8nApiUrl + '/workflows', {
       method: 'GET',
       headers: customHeaders,
     })

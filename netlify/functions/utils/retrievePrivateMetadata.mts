@@ -1,4 +1,5 @@
 import { createClerkClient } from '@clerk/clerk-sdk-node'
+import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 
 type Result<T, E> = { success: true; data: T } | { success: false; error: E }
 
@@ -23,7 +24,7 @@ type Params = {
 }
 
 // FIXME: use env var wrapper
-const clerkClient = createClerkClient({ secretKey: process.env.CLERK_TOKEN })
+const clerkClient = createClerkClient({ secretKey: FunctionEnvVars.clerkToken })
 
 export default async (params: Params): Promise<Result<RetrieveSuccess, RetrieveError>> => {
   const authHeader = params.request.headers.get('Authorization')

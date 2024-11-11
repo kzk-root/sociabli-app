@@ -1,4 +1,5 @@
 import { BskyAgent, RichText } from '@atproto/api'
+import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 
 export default async (request: Request) => {
   console.log('[blueskyFacetDetection] Start')
@@ -13,7 +14,7 @@ export default async (request: Request) => {
       return Response.json({ message: 'No token provided' }, { status: 401 })
     }
 
-    if (process.env.N8N_RECEIVE_TOKEN !== token) {
+    if (FunctionEnvVars.n8nReceiveToken !== token) {
       console.log('[blueskyFacetDetection] Wrong token provided')
       return Response.json({ message: 'Wrong provided' }, { status: 401 })
     }

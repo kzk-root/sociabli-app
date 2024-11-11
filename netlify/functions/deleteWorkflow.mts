@@ -1,5 +1,6 @@
 import { Context } from '@netlify/functions'
 import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
+import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 
 export default async (request: Request, _context: Context) => {
   console.log('[deleteWorkflow] Start')
@@ -18,9 +19,9 @@ export default async (request: Request, _context: Context) => {
     const requestBody = await request.json()
     const headers = new Headers()
     headers.set('Content-Type', 'application/json')
-    headers.set('Authorization', process.env.N8N_SECRET || '')
+    headers.set('Authorization', FunctionEnvVars.n8nSecret)
 
-    const url = `${process.env.N8N_WEBHOOK_URL}/remove-workflow`
+    const url = `${FunctionEnvVars.n8nWebhookUrl}/remove-workflow`
     const result = await fetch(url, {
       method: 'POST',
       headers,
