@@ -1,0 +1,2 @@
+[context.production]
+  environment = { N8N_API_URL = "https://workflows.socab.li/api/v1", N8N_WEBHOOK_URL = "https://workflows.socab.li/webhook" }
