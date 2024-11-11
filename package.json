@@ -1,8 +1,8 @@
 {
-  "name": "cross-poster-mvp",
+  "name": "sociabli-app",
   "private": true,
   "version": "0.9.0",
-  "description": "Cross Poster MVP",
+  "description": "Sociabli App",
   "author": "Mark Schmeiser<mark.schmeiser@konzentrik.de>",
   "contributors": [
     {

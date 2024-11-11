@@ -1,2 +1,2 @@
-# cross-poster-mvp
-cross-poster-mvp codebase
+# sociabli-app
+sociabli app codebase

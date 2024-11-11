@@ -5,6 +5,6 @@ peasy
 Remy
 Toastify
 toastify
-Crossposter
+Sociabli
 Bluesky
 bluesky
