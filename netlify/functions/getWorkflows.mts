@@ -54,7 +54,7 @@ export default async (request: Request, _context: Context) => {
             id: 'blueskyUserHandle',
             name: 'Bluesky User handle',
             type: 'text',
-            description: '',
+            description: 'For example: USERNAME.bsky.social',
           },
           {
             id: 'blueskyAccessToken',
