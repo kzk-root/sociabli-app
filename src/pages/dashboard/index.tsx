@@ -1,7 +1,8 @@
 import { useAuth } from '@clerk/clerk-react'
 import { useEffect, useState } from 'react'
 import 'tippy.js/dist/tippy.css'
-import Tippy from '@tippyjs/react' // optional
+import Tippy from '@tippyjs/react'
+import EnvVars from '@/services/EnvVars.ts'
 
 type FieldSet = {
   id: string
@@ -154,7 +155,7 @@ export default function DashboardPage() {
   const fetchUserData = async () => {
     const token = await getToken()
 
-    fetch(`${process.env.NETLIFY_FUNCTIONS}/getUserData`, {
+    fetch(`${EnvVars.netlifyFunctions}/getUserData`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -169,7 +170,7 @@ export default function DashboardPage() {
   const fetchWorkflows = async () => {
     const token = await getToken()
 
-    fetch(`${process.env.NETLIFY_FUNCTIONS}/getUserWorkflows`, {
+    fetch(`${EnvVars.netlifyFunctions}/getUserWorkflows`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -180,7 +181,7 @@ export default function DashboardPage() {
         setUserWorkflows(json)
       })
 
-    fetch(`${process.env.NETLIFY_FUNCTIONS}/getWorkflows`, {
+    fetch(`${EnvVars.netlifyFunctions}/getWorkflows`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -204,7 +205,7 @@ export default function DashboardPage() {
       formFields.push({ id, value })
     }
 
-    const response = await fetch(`${process.env.NETLIFY_FUNCTIONS}/activateWorkflow`, {
+    const response = await fetch(`${EnvVars.netlifyFunctions}/activateWorkflow`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -233,7 +234,7 @@ export default function DashboardPage() {
       formFields.push({ id, value })
     }
 
-    await fetch(`${process.env.NETLIFY_FUNCTIONS}/deleteWorkflow`, {
+    await fetch(`${EnvVars.netlifyFunctions}/deleteWorkflow`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,

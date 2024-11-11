@@ -30,7 +30,7 @@ const getWorkflowExecutions = async (workflowId: string, n8nApiKey: string): Pro
     const customHeaders = new Headers()
     customHeaders.set('X-N8N-API-KEY', n8nApiKey)
 
-    const response = await fetch(process.env.API_URL + `/executions?workflowId=${workflowId}&limit=1`, {
+    const response = await fetch(process.env.N8N_API_URL + `/executions?workflowId=${workflowId}&limit=1`, {
         method: "GET",
         headers: customHeaders,
     })
@@ -52,7 +52,7 @@ export default async (request: Request, _context: Context) => {
     const customHeaders = new Headers()
     customHeaders.set('X-N8N-API-KEY', retrievePrivateMetadataResult.data.n8nApiKey)
 
-    const response = await fetch(process.env.API_URL + '/workflows', {
+    const response = await fetch(process.env.N8N_API_URL + '/workflows', {
         method: "GET",
         headers: customHeaders,
     })
