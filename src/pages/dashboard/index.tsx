@@ -43,7 +43,7 @@ export default function DashboardPage() {
   }
 
   const renderUserWorkflows = () => {
-    if (!userWorkflows || userWorkflows.length === 0) {
+    if (!userWorkflows || !Array.isArray(userWorkflows) || userWorkflows.length === 0) {
       return <div className={'no-data'}>No active workflows. Create a new one below.</div>
     }
 
@@ -68,7 +68,7 @@ export default function DashboardPage() {
   }
 
   const renderWorkflow = () => {
-    if (!workflows || workflows.length === 0) {
+    if (!workflows || !Array.isArray(workflows) || workflows.length === 0) {
       return <div className={'no-data'}>No available workflows. Come back soon.</div>
     }
 
