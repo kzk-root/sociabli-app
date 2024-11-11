@@ -2,8 +2,12 @@ import { Context } from '@netlify/functions'
 import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 
 export default async (request: Request, _context: Context) => {
+  console.log('[activateWorkflow] Start')
+
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })
   if (retrievePrivateMetadataResult.success === false) {
+    console.log('[activateWorkflow] Get failed', retrievePrivateMetadataResult.error.error)
+
     return Response.json(
       { message: retrievePrivateMetadataResult.error.message },
       { status: retrievePrivateMetadataResult.error.statusCode }
@@ -50,7 +54,8 @@ export default async (request: Request, _context: Context) => {
 
     return Response.json({}, { status: 200 })
   } catch (error) {
-    console.log(error)
-    return Response.json({ error: 'Failed fetching data' }, { status: 500 })
+    console.log('[activateWorkflow] Error thrown', error)
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+    return Response.json({ error: `Failed activating workflow: ${errorMessage}` }, { status: 500 })
   }
 }

@@ -39,6 +39,7 @@ export default async (request: Request, _context: Context) => {
     return Response.json({}, { status: 200 })
   } catch (error) {
     console.log('[deleteWorkflow] Failed', error)
-    return Response.json({ error: 'Failed fetching data' }, { status: 500 })
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+    return Response.json({ error: `Failed deleting workflow: ${errorMessage}` }, { status: 500 })
   }
 }

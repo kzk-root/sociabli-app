@@ -68,6 +68,7 @@ export default async (request: Request, _context: Context) => {
     return Response.json(workflowList)
   } catch (error) {
     console.log('[getWorkflows] Failed fetching data', error)
-    return Response.json({ error: 'Failed fetching data' }, { status: 500 })
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+    return Response.json({ error: `Failed fetching workflows: ${errorMessage}` }, { status: 500 })
   }
 }

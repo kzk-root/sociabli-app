@@ -29,6 +29,7 @@ export default async (request: Request) => {
     })
   } catch (error) {
     console.log('[blueskyFacetDetection] Failed', error)
-    return Response.json({ error: 'Failed creating facets' }, { status: 500 })
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+    return Response.json({ error: `Failed creating facets: ${errorMessage}` }, { status: 500 })
   }
 }
