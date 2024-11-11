@@ -11,7 +11,7 @@ export default async (request: Request, _context: Context) => {
   }
 
   try {
-    // Call N8N - Crossposter with "data"
+    // Call N8N - Sociabli with "data"
     // N8N Steps
     // Trigger on Webhook, receiving "data"
     // Create Credentials for Medium with n8n-api-key of user

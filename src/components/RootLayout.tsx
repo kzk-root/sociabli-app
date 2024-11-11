@@ -13,7 +13,7 @@ export default function RootLayout() {
     >
       <header className="page">
         <nav>
-          <Link to="/">Crossposter</Link>
+          <Link to="/">Sociabli</Link>
           <SignedIn>
             <Link to="/dashboard">Dashboard</Link>
             <UserButton />
