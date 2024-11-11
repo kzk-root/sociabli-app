@@ -3,7 +3,7 @@ import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 
 export default async (request: Request, _context: Context) => {
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })
-  if (!retrievePrivateMetadataResult.success) {
+  if (retrievePrivateMetadataResult.success === false) {
     return Response.json(
       { message: retrievePrivateMetadataResult.error.message },
       { status: retrievePrivateMetadataResult.error.statusCode }
