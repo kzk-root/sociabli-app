@@ -22,8 +22,6 @@ type UserData = {
   credential: string
 }
 
-const BASE_URL = 'http://localhost:8888/.netlify/functions'
-
 export default function DashboardPage() {
   const { getToken } = useAuth()
   const [userWorkflows, setUserWorkflows] = useState<Workflow[]>([])
@@ -156,7 +154,7 @@ export default function DashboardPage() {
   const fetchUserData = async () => {
     const token = await getToken()
 
-    fetch(`${BASE_URL}/getUserData`, {
+    fetch(`${process.env.NETLIFY_FUNCTIONS}/getUserData`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -171,7 +169,7 @@ export default function DashboardPage() {
   const fetchWorkflows = async () => {
     const token = await getToken()
 
-    fetch(`${BASE_URL}/getUserWorkflows`, {
+    fetch(`${process.env.NETLIFY_FUNCTIONS}/getUserWorkflows`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -182,7 +180,7 @@ export default function DashboardPage() {
         setUserWorkflows(json)
       })
 
-    fetch(`${BASE_URL}/getWorkflows`, {
+    fetch(`${process.env.NETLIFY_FUNCTIONS}/getWorkflows`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -206,7 +204,7 @@ export default function DashboardPage() {
       formFields.push({ id, value })
     }
 
-    const response = await fetch(`${BASE_URL}/activateWorkflow`, {
+    const response = await fetch(`${process.env.NETLIFY_FUNCTIONS}/activateWorkflow`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -235,7 +233,7 @@ export default function DashboardPage() {
       formFields.push({ id, value })
     }
 
-    await fetch(`${BASE_URL}/deleteWorkflow`, {
+    await fetch(`${process.env.NETLIFY_FUNCTIONS}/deleteWorkflow`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
