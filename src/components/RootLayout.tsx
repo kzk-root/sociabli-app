@@ -10,6 +10,7 @@ export default function RootLayout() {
       routerPush={(to) => navigate(to)}
       routerReplace={(to) => navigate(to, { replace: true })}
       publishableKey={EnvVars.clerkPublishableKey}
+      signInForceRedirectUrl="/dashboard"
     >
       <header className="page">
         <nav>
