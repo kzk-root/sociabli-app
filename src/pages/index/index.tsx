@@ -65,7 +65,7 @@ export default function IndexPage() {
         </section>
 
         <section>
-          <h3>You Blog to Medium</h3>
+          <h3>Your Blog to Medium</h3>
           <p className="description">Publish your blog posts on Medium. Sociabli enables you to define which of your blog posts should be cross posted to medium.com. Simply install the Sociabli plugin for your CMS and connect it to Medium. We will take care of canonical links and other details, so that you won't run into duplicate content on Google and other search engines.</p>
 
           <div className="flow">
