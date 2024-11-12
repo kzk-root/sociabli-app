@@ -1,18 +1,24 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RootLayout from '@/components/RootLayout.tsx'
 import DashboardLayout from '@/components/DashboardLayout.tsx'
-import ContactPage from '@/pages/contact'
 import SignInPage from '@/pages/signIn'
 import SignUpPage from '@/pages/signUp'
 import DashboardPage from '@/pages/dashboard'
 import IndexPage from '@/pages/index'
+import TermsOfServicePage from '@/pages/terms'
+import PrivacyPage from '@/pages/privacy'
+import ImprintPage from '@/pages/imprint'
+import FaqPage from '@/pages/faq'
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
       { path: '/', element: <IndexPage /> },
-      { path: '/contact', element: <ContactPage /> },
+      { path: '/terms', element: <TermsOfServicePage /> },
+      { path: '/privacy', element: <PrivacyPage /> },
+      { path: '/imprint', element: <ImprintPage /> },
+      { path: '/faq', element: <FaqPage /> },
       { path: '/sign-in/*', element: <SignInPage /> },
       { path: '/sign-up/*', element: <SignUpPage /> },
       {

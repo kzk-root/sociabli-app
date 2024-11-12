@@ -29,9 +29,10 @@ export default function RootLayout() {
       </main>
 
       <footer>
-        <a href={'#'}>Privacy Policy</a>
-        <a href={'#'}>Terms of Service</a>
-        <a href={'#'}>Contact</a>
+        <Link to="/faq">Faq</Link>
+        <Link to="/privacy">Privacy Policy</Link>
+        <Link to="/terms">Terms of Service</Link>
+        <Link to="/imprint">Imprint</Link>
       </footer>
     </ClerkProvider>
   )
