@@ -80,6 +80,15 @@ export default async (request: Request, _context: Context) => {
           retrievePrivateMetadataResult.data.n8nApiKey
         )
 
+        if (executions.data.length === 0) {
+          workflowList.push({
+            id: workflow.id,
+            name: workflow.name.replace(` - ${retrievePrivateMetadataResult.data.userId}`, ''),
+            status: 'pending',
+          })
+          continue
+        }
+
         const isRunning = executions.data.find((execution) => {
           return execution.stoppedAt === null || execution.stoppedAt.length === 0
         })

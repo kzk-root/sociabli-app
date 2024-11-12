@@ -101,6 +101,12 @@
             height: 15px;
             border-radius: 50%;
 
+            &.pending {
+                background-color: #c6c5c5;
+                background: linear-gradient(0deg, #c6c5c5 0%, #e7e6e6 100%);
+                border: 1px solid #c6c5c5;
+            }
+
             &.running {
                 background-color: #00aaff;
                 background: linear-gradient(0deg, #00aaff 0%, #00eeff 100%);
