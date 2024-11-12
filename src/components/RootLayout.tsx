@@ -29,7 +29,7 @@ export default function RootLayout() {
       </main>
 
       <footer>
-        <Link to="/faq">Faq</Link>
+        <Link to="/faq">FAQ</Link>
         <Link to="/privacy">Privacy Policy</Link>
         <Link to="/terms">Terms of Service</Link>
         <Link to="/imprint">Imprint</Link>

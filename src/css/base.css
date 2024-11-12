@@ -58,10 +58,11 @@ footer {
     justify-content: end;
     gap: 1rem;
     padding: 0.5rem 1rem;
-    position: fixed;
-    bottom: 0;
+    /*position: fixed;*/
+    /*bottom: 0;*/
     width: 100%;
     z-index: 20;
+    margin-top: 5rem;
 
     a {
         color: white;
