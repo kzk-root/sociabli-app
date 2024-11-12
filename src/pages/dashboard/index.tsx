@@ -127,6 +127,7 @@ export default function DashboardPage() {
               type="text"
               value={userData.path}
               name="path"
+              id="path"
               readOnly={true}
               onClick={() => {
                 copyToClipboard(userData.path)
@@ -141,6 +142,7 @@ export default function DashboardPage() {
               type="text"
               value={userData.credential}
               name="token"
+              id="token"
               readOnly={true}
               onClick={() => {
                 copyToClipboard(userData.credential)
