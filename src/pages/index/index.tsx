@@ -13,10 +13,8 @@ export default function IndexPage() {
           sources, but we are working on more!
         </p>
 
-        <p className="centered">
-                <a href="/sign-up" className="btn btn-primary">
-          Join beta phase
-        </a>
+        <p className="centered sticky">
+          <a href="/sign-up" className="btn btn-primary">Join beta phase</a>
         </p>
         <section>
           <h3>Cross post from Mastodon to Bluesky</h3>
