@@ -103,7 +103,7 @@ export default function IndexPage() {
 
         <section>
           <h3>More flows will come!</h3>
-          <p className="description">We're just starting! Sociabli is currently running in a beta test mode and we are working on more flows to enable you to connect even more services. Sign up for free now to join our beta. We will add more flows over the time.</p>
+          <p className="description">We're just starting! Sociabli is currently running in a beta test mode and we are working on more flows to enable you to connect even more services. Sign up for free now, to join our beta. We will add more flows over the time.</p>
 
           <div className="flow">
             <div className="card">
