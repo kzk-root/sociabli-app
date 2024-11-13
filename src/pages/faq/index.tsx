@@ -8,7 +8,7 @@ export default function FaqPage() {
         <summary>Can anybody use this service?</summary>
         <div>
           <p>
-            No! To ensure a safe, respectful, and inclusive environment, we do not allow to use Sociabli
+            <strong>No!</strong> To ensure a safe, respectful, and inclusive environment, we do not allow to use Sociabli
             for the following types of content:
           </p>
           <ul>

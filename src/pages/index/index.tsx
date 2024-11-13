@@ -1,3 +1,5 @@
+import { SignedIn, SignedOut } from '@clerk/clerk-react'
+
 export default function IndexPage() {
   return (
     <div className="home">
@@ -14,7 +16,12 @@ export default function IndexPage() {
         </p>
 
         <p className="centered sticky">
-          <a href="/sign-up" className="btn btn-primary">Join beta phase</a>
+          <SignedIn>
+            <a href="/dashboard" className="btn btn-primary">Open Dashboard</a>
+          </SignedIn>
+          <SignedOut>
+            <a href="/sign-up" className="btn btn-primary">Join beta phase</a>
+          </SignedOut>
         </p>
         <section>
           <h3>Cross post from Mastodon to Bluesky</h3>
