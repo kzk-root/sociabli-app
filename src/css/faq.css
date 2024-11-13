@@ -1,0 +1,28 @@
+details.faq {
+    font-size: 1.1rem;
+    margin: var(--default-margin);
+    background-color: #f1f1f1;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+
+    summary {
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    div {
+        padding: 1rem 0;
+    }
+
+    p {
+        margin: 1rem;
+    }
+
+    code {
+        background-color: #ddd;
+        padding: 0.225rem;
+        border-radius: 0.25rem;
+        font-size: 0.85rem;
+    }
+}

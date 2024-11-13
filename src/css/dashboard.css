@@ -67,18 +67,6 @@
         }
     }
 
-    .animated-details {
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-    }
-
-    .animated-details[open] {
-      max-height: 500px; /* Adjust to your content’s approximate max height */
-    }
-
-    .animated-details:not([open]) {
-        max-height: 3rem;
-    }
 
     .user-workflows {
         li {
