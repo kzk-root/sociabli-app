@@ -274,7 +274,7 @@ export default function DashboardPage() {
       <div className={'credentials'}>
         <h2>Webhook</h2>
 
-        <details className="animated-details">
+        <details className="creds animated-details">
           <summary>Your Webhook credentials</summary>
           <div>{renderUserData()}</div>
         </details>

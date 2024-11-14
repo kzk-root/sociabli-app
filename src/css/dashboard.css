@@ -25,7 +25,7 @@
     .credentials {
         margin: 3rem 0;
 
-        details div {
+        .creds div {
             display: grid;
             gap: 1rem;
             grid-template-columns: 1fr 1fr;
