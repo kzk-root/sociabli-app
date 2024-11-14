@@ -76,7 +76,7 @@ footer {
 }
 
 .animated-details[open] {
-  max-height: 500px; /* Adjust to your content’s approximate max height */
+  max-height: 1000px; /* Adjust to your content’s approximate max height */
 }
 
 .animated-details:not([open]) {

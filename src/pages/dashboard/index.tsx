@@ -284,9 +284,9 @@ export default function DashboardPage() {
           <div>
             <p>
               In case you want to use the webhook directly because we not yet support your CMS, you
-              can do so. Send a POST request to:
+              can do so. Send a <code>POST</code> request to:
               <pre>
-                <code>https://webhook.sociab.li/{userData?.path}</code>
+                <code className="code-block">https://webhook.sociab.li/{userData?.path}</code>
               </pre>
             </p>
             <p>
