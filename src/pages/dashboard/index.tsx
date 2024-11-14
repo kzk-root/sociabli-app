@@ -52,7 +52,7 @@ export default function DashboardPage() {
         {userWorkflows.map((workflow) => (
           <li key={workflow.id}>
             <Tippy content={workflow.status} placement="top-start">
-              <div className={`status ${workflow.status}`}> </div>
+              <div className={`status ${workflow.status}`}></div>
             </Tippy>
             <div>{workflow.name}</div>
             <form method="POST" onSubmit={deleteWorkflow}>
@@ -277,6 +277,45 @@ export default function DashboardPage() {
         <details className="animated-details">
           <summary>Your Webhook credentials</summary>
           <div>{renderUserData()}</div>
+        </details>
+
+        <details className="animated-details">
+          <summary>How to use Webhook</summary>
+          <div>
+            <p>
+              In case you want to use the webhook directly because we not yet support your CMS, you
+              can do so. Send a POST request to:
+              <pre>
+                <code>https://webhook.sociab.li/{userData?.path}</code>
+              </pre>
+            </p>
+            <p>
+              With the following headers:
+              <pre>
+                <code className="code-block">
+                  {`{
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer ${userData?.credential}'
+}`}
+                </code>
+              </pre>
+            </p>
+            <p>
+              Send a body with the following structure:
+              <pre>
+                <code className="code-block">
+                  {`{
+  'title': 'Your post title',
+  'intro': 'A short intro text',
+  'text': 'The main content of your post, Markdown is supported',
+  'tags': 'some, tags, for, your, post',
+  'url': 'canonical url of your post',
+  'publishStatus': 'draft' | 'published',
+}`}
+                </code>
+              </pre>
+            </p>
+          </div>
         </details>
       </div>
 

@@ -82,3 +82,14 @@ footer {
 .animated-details:not([open]) {
     max-height: 3rem;
 }
+
+.code-block {
+    display: block;
+    background-color: #333333;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+
+}
