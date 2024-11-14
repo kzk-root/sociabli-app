@@ -271,7 +271,10 @@ export default function DashboardPage() {
       <h2>Your workflows</h2>
       {renderUserWorkflows()}
 
-      <div className={'credentials'}>
+      <h2>Available workflows</h2>
+      {renderWorkflow()}
+
+            <div className={'credentials'}>
         <h2>Webhook</h2>
 
         <details className="creds animated-details">
@@ -280,7 +283,7 @@ export default function DashboardPage() {
         </details>
 
         <details className="animated-details">
-          <summary>How to use Webhook</summary>
+          <summary>How to use the Webhook</summary>
           <div>
             <p>
               In case you want to use the webhook directly because we not yet support your CMS, you
@@ -319,8 +322,6 @@ export default function DashboardPage() {
         </details>
       </div>
 
-      <h2>Available workflows</h2>
-      {renderWorkflow()}
     </div>
   )
 }
