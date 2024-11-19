@@ -24,6 +24,10 @@ export default async (request: Request, _context: Context) => {
         name: 'Weblog to Medium',
         description: 'Each blog entry will be published on Medium',
         id: 'blog_to_medium',
+        flow: {
+          from: { label: 'Blog', icon: 'BlogIcon' },
+          to: { label: 'Medium', icon: 'MediumIcon' },
+        },
         fields: [
           {
             id: 'mediumAccessToken',
@@ -37,6 +41,10 @@ export default async (request: Request, _context: Context) => {
         name: 'Mastodon to Bluesky',
         description: 'Sync your Mastodon posts to Bluesky',
         id: 'mastodon_to_bluesky',
+        flow: {
+          from: { label: 'Mastodon', icon: 'MastodonIcon' },
+          to: { label: 'Bluesky', icon: 'BlueskyIcon' },
+        },
         fields: [
           {
             id: 'mastodonInstance',
@@ -54,7 +62,7 @@ export default async (request: Request, _context: Context) => {
             id: 'blueskyUserHandle',
             name: 'Bluesky User handle',
             type: 'text',
-            description: 'For example: USERNAME.bsky.social',
+            description: 'For example: USERNAME.bsky.social - use the full identifier domain',
           },
           {
             id: 'blueskyAccessToken',

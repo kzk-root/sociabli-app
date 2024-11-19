@@ -1,0 +1,147 @@
+.flow {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+
+    &.dimmed {
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.2), white);
+        }
+    }
+
+    @media (max-width: 768px) {
+        display: block;
+        margin-bottom: 5rem;
+    }
+}
+
+.card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    align-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    svg {
+        width: 60px;
+    }
+
+    em {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+}
+
+
+.connection {
+    position: relative;
+    width: 60px;
+
+    @media (max-width: 768px) {
+        transform: rotate(90deg);
+        margin: 0 auto;
+        width: 40px;
+    }
+}
+
+.service {
+    font-size: 1.5rem;
+    color: #444444;
+}
+
+/* Connecting line animation */
+.connection line {
+    stroke-dasharray: 50, 50;
+    stroke-dashoffset: 50;
+}
+
+.small-flow {
+    margin-top: 0px;
+    align-items: center;
+}
+
+.active-flow {
+    .card {
+        padding: 10px;
+
+        svg {
+        width: 30px;
+    }
+    }
+
+    .card1 {
+        animation: card1-glow 2s ease-in-out infinite;
+    }
+
+    .connection line {
+        animation: draw-line 2s ease-in-out infinite 0.5s; /* Delay matches card1 */
+    }
+
+    .card2 {
+        animation: card2-glow 2s ease-in-out infinite 1.2s; /* Delay to follow the line */
+    }
+}
+
+
+/* Keyframe for glowing card1 */
+@keyframes card1-glow {
+    0% {
+        border-color: #ccc;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        border-color: #358C9C;
+        box-shadow: 0 8px 12px rgba(53, 140, 156, 0.3);
+    }
+    100% {
+        border-color: #ccc;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Keyframe for line animation */
+@keyframes draw-line {
+    0% {
+        stroke-dashoffset: 50;
+        opacity: 0;
+    }
+    50% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: -50;
+        opacity: 0;
+    }
+}
+
+/* Keyframe for glowing card2 */
+@keyframes card2-glow {
+    0% {
+        border-color: #ccc;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        border-color: #358C9C; /* Different color for card2 */
+        box-shadow: 0 8px 12px rgba(53, 140, 156, 0.3);
+    }
+    100% {
+        border-color: #ccc;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+}
