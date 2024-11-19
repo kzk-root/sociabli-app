@@ -16,6 +16,10 @@
         }
     }
 
+    h2 {
+        margin-top: 4rem;
+    }
+
     section {
         background-color: #f1f1f1;
         padding: 3rem;
