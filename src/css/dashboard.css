@@ -79,9 +79,9 @@
             align-items: center;
             grid-template-columns: 20px 1fr auto;
             margin: var(--default-margin);
-            /*background-color: #f1f1f1;*/
+            background-color: #f1f1f1;
             padding: 0.5rem 1rem;
-            /*border-radius: 0.5rem;*/
+            border-radius: 0.5rem;
         }
 
         form {
