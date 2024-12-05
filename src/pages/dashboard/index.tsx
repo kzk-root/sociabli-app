@@ -3,20 +3,23 @@ import { useEffect, useState } from 'react'
 import 'tippy.js/dist/tippy.css'
 import Tippy from '@tippyjs/react'
 import EnvVars from '@/services/EnvVars.ts'
-import ConnectionIcon from '@/components/icons/connection.tsx'
 import MastodonIcon from '@/components/icons/mastodon.tsx'
 import BlueskyIcon from '@/components/icons/bluesky.tsx'
 import MediumIcon from '@/components/icons/medium.tsx'
 import BlogIcon from '@/components/icons/blog.tsx'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import ConnectionIcon from '@/components/icons/connection.tsx'
 
-type FieldSet = {
+export type FieldSet = {
   id: string
   name: string
   type: string
   description?: string
+  pattern?: string
 }
 
-type Workflow = {
+export type Workflow = {
   id: string
   name: string
   description: string
@@ -43,6 +46,7 @@ export default function DashboardPage() {
   const [userWorkflows, setUserWorkflows] = useState<Workflow[]>([])
   const [workflows, setWorkflows] = useState<Workflow[]>([])
   const [userData, setUserData] = useState<UserData>()
+  const [invalidFields, setInvalidFields] = useState<string[]>([])
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
@@ -142,7 +146,6 @@ export default function DashboardPage() {
     if (!workflows || !Array.isArray(workflows) || workflows.length === 0) {
       return <div className={'no-data'}>Loading available flows…</div>
     }
-
     return (
       <ul>
         {workflows.map((workflow) => (
@@ -182,7 +185,13 @@ export default function DashboardPage() {
                         </label>
                       </Tippy>
 
-                      <input type={field.type || 'text'} name={field.id} />
+                      <input
+                        type={field.type || 'text'}
+                        name={field.id}
+                        pattern={field.pattern}
+                        required={true}
+                        className={invalidFields.includes(field.id) ? 'has-error' : ''}
+                      />
                     </div>
                   ))}
                   <button type="submit">Create flow</button>
@@ -251,7 +260,7 @@ export default function DashboardPage() {
       })
   }
 
-  const fetchWorkflows = async () => {
+  const fetchUserWorkflows = async () => {
     const token = await getToken()
 
     fetch(`${EnvVars.netlifyFunctions}/getUserWorkflows`, {
@@ -263,6 +272,9 @@ export default function DashboardPage() {
       .then((res) => res.json())
       .then((json) => {
         setUserWorkflows(json)
+      })
+      .catch(() => {
+        toast('Could not activate workflow. Please try again later.')
       })
 
     fetch(`${EnvVars.netlifyFunctions}/getWorkflows`, {
@@ -289,7 +301,7 @@ export default function DashboardPage() {
       formFields.push({ id, value })
     }
 
-    const response = await fetch(`${EnvVars.netlifyFunctions}/activateWorkflow`, {
+    await fetch(`${EnvVars.netlifyFunctions}/activateWorkflow`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -299,11 +311,42 @@ export default function DashboardPage() {
         fields: formFields,
       }),
     })
+      .then((res) => res.json())
+      .then((json) => {
+        // happy path: no code, means no error
+        if (!json.code) {
+          setInvalidFields([])
+          event.target.reset()
+          fetchUserWorkflows()
+          return
+        }
 
-    if (response.ok) {
-      event.target.reset()
-      fetchWorkflows()
-    }
+        switch (json.code) {
+          case 'MASTODON_RSS_FEED_UNAVAILABLE':
+            if (json.fields && Array.isArray(json.fields)) {
+              setInvalidFields(json.fields)
+            }
+            throw new Error(
+              'We cannot reach your RSS feed - please check your instance and handle.'
+            )
+
+          case 'BLUESKY_AUTH_FAILED':
+            if (json.fields && Array.isArray(json.fields)) {
+              setInvalidFields(json.fields)
+            }
+
+            throw new Error(
+              'We cannot authenticate at Bluesky with the given input - please check your handle and token.'
+            )
+        }
+
+        // whatever we do to handle the error, we throw the error to see the toast message
+        throw new Error(json.error)
+      })
+      .catch((error) => {
+        toast(error.message)
+        return null
+      })
   }
 
   const deleteWorkflow = async (event: any) => {
@@ -328,12 +371,12 @@ export default function DashboardPage() {
       }),
     })
 
-    fetchWorkflows()
+    fetchUserWorkflows()
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchWorkflows()
+      await fetchUserWorkflows()
       await fetchUserData()
     }
 
@@ -341,59 +384,60 @@ export default function DashboardPage() {
   }, [])
 
   return (
-    <div className="container dashboard">
-      <div className="msg">Copied</div>
-      <section>
-        <h1>Dashboard</h1>
-        <p className="intro" data-tippy-content={'hallo welt'}>
-          See all available workflows and the once you activated.
+    <>
+      <div className="container dashboard">
+        <div className="msg">Copied</div>
+        <section>
+          <h1>Dashboard</h1>
+          <p className="intro" data-tippy-content={'hallo welt'}>
+            See all available workflows and the once you activated.
+          </p>
+        </section>
+
+        <h2>Your flows</h2>
+        {renderUserWorkflows()}
+
+        <h2>Available flows</h2>
+        <p className="description">
+          Click on a flow to configure it. Enter the needed information to activate the flow. Our
+          flows will start working with your next post, we will not publish older posts.
         </p>
-      </section>
+        {renderWorkflow()}
 
-      <h2>Your flows</h2>
-      {renderUserWorkflows()}
+        <div className={'credentials'}>
+          <h2>Webhook</h2>
 
-      <h2>Available flows</h2>
-      <p className="description">
-        Click on a flow to configure it. Enter the needed information to activate the flow. Our
-        flows will start working with your next post, we will not publish older posts.
-      </p>
-      {renderWorkflow()}
+          <details className="creds animated-details">
+            <summary>Your Webhook credentials</summary>
+            <div className="details">{renderUserData()}</div>
+          </details>
 
-      <div className={'credentials'}>
-        <h2>Webhook</h2>
-
-        <details className="creds animated-details">
-          <summary>Your Webhook credentials</summary>
-          <div className="details">{renderUserData()}</div>
-        </details>
-
-        <details className="animated-details">
-          <summary>How to use the Webhook</summary>
-          <div className="details">
-            <p>
-              In case you want to use the webhook directly because we not yet support your CMS, you
-              can do so. Send a <code>POST</code> request to:
-              <pre>
-                <code className="code-block">https://webhook.sociab.li/{userData?.path}</code>
-              </pre>
-            </p>
-            <p>
-              With the following headers:
-              <pre>
-                <code className="code-block">
-                  {`{
+          <details className="animated-details">
+            <summary>How to use the Webhook</summary>
+            <div className="details">
+              <p>
+                In case you want to use the webhook directly because we not yet support your CMS,
+                you can do so. Send a <code>POST</code> request to:
+                <pre>
+                  <code className="code-block">https://webhook.sociab.li/{userData?.path}</code>
+                </pre>
+              </p>
+              <p>
+                With the following headers:
+                <pre>
+                  <code className="code-block">
+                    {`{
   'Content-Type': 'application/json',
   'Authorization': 'Bearer ${userData?.credential}'
 }`}
-                </code>
-              </pre>
-            </p>
-            <p>
-              Send a body with the following structure:
-              <pre>
-                <code className="code-block">
-                  {`{
+                  </code>
+                </pre>
+              </p>
+              <p>
+                Send a body with the following structure:
+                <pre>
+                  <code className="code-block">
+                    {`{
   'title': 'Your post title',
   'intro': 'A short intro text',
   'text': 'The main content of your post, Markdown is supported',
@@ -401,12 +445,14 @@ export default function DashboardPage() {
   'url': 'canonical url of your post',
   'publishStatus': 'draft' | 'published',
 }`}
-                </code>
-              </pre>
-            </p>
-          </div>
-        </details>
+                  </code>
+                </pre>
+              </p>
+            </div>
+          </details>
+        </div>
       </div>
-    </div>
+      <ToastContainer position="bottom-center" />
+    </>
   )
 }

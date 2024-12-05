@@ -41,7 +41,7 @@ export default async (request: Request, _context: Context) => {
       {}
     )
 
-    await fetch(`${FunctionEnvVars.n8nWebhookUrl}/activate-workflow`, {
+    const result = await fetch(`${FunctionEnvVars.n8nWebhookUrl}/activate-workflow`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -52,6 +52,10 @@ export default async (request: Request, _context: Context) => {
         fields,
       }),
     })
+
+    if (!result.ok) {
+      return Response.json(await result.json(), { status: result.status })
+    }
 
     return Response.json({}, { status: 200 })
   } catch (error) {
