@@ -64,7 +64,7 @@ export default async (request: Request, _context: Context) => {
             name: 'Bluesky User handle',
             type: 'text',
             description: 'For example: USERNAME.bsky.social - use the full identifier domain',
-            pattern: '^[a-zA-Z0-9_]{1,15}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$',
+            pattern: '^[a-zA-Z0-9_-]{1,30}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$',
           },
           {
             id: 'blueskyAccessToken',
