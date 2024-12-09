@@ -7,7 +7,7 @@ import MastodonIcon from '@/components/icons/mastodon.tsx'
 import BlueskyIcon from '@/components/icons/bluesky.tsx'
 import MediumIcon from '@/components/icons/medium.tsx'
 import BlogIcon from '@/components/icons/blog.tsx'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ConnectionIcon from '@/components/icons/connection.tsx'
 
