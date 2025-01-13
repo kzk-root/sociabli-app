@@ -84,8 +84,8 @@ export default async (request: Request, _context: Context) => {
           workflowList.push({
             id: workflow.id,
             name: workflow.name
-              .replace(` - ${retrievePrivateMetadataResult.data.userId}`, '')
-              .replace('Subworkflow - ', ''),
+              .replace('Subworkflow - ', '')
+              .replace(` - ${retrievePrivateMetadataResult.data.userId}`, ''),
             status: 'pending',
           })
           continue
