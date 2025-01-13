@@ -100,7 +100,9 @@ export default async (request: Request, _context: Context) => {
 
         workflowList.push({
           id: workflow.id,
-          name: workflow.name.replace(` - ${retrievePrivateMetadataResult.data.userId}`, ''),
+          name: workflow.name
+            .replace(` - ${retrievePrivateMetadataResult.data.userId}`, '')
+            .replace('Subworkflow - ', ''),
           status: status,
         })
       }
