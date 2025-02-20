@@ -466,6 +466,12 @@ export default function DashboardPage() {
             </div>
           </details>
         </div>
+
+        <h2>You have any feedback – please get in touch</h2>
+        <p className="description">
+          We would love to hear from you. If you have any feedback, questions or ideas, please get
+          in touch at <a href="mailto:support@sociab.li">support@sociab.li</a>
+        </p>
       </div>
       <ToastContainer position="bottom-center" />
     </>
