@@ -338,9 +338,11 @@ export default function DashboardPage() {
             if (json.fields && Array.isArray(json.fields)) {
               setInvalidFields(json.fields)
             }
-            throw new Error(
-              'We cannot reach your RSS feed - please check your instance and handle.'
-            )
+            const message =
+              json.statusCode === 401
+                ? `Your instance "${formData.get('mastodonInstance')}" is not yet supported.`
+                : 'RSS feed not found - please check your instance and handle.'
+            throw new Error(message)
 
           case 'BLUESKY_AUTH_FAILED':
             if (json.fields && Array.isArray(json.fields)) {
