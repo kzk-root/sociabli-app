@@ -48,7 +48,7 @@ export default function FaqPage() {
         </div>
       </details>
       <details className="faq animated-details">
-        <summary>How can i cross post to X/Twitter</summary>
+        <summary>How can I cross post to X/Twitter</summary>
         <div>
           <p>
             You cannot. We will <strong>not</strong> support X/Twitter as we do not want to support
