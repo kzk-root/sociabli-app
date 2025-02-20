@@ -8,8 +8,8 @@ export default function FaqPage() {
         <summary>Can anybody use this service?</summary>
         <div>
           <p>
-            <strong>No!</strong> To ensure a safe, respectful, and inclusive environment, we do not allow to use Sociabli
-            for the following types of content:
+            <strong>No!</strong> To ensure a safe, respectful, and inclusive environment, we do not
+            allow to use Sociabli for the following types of content:
           </p>
           <ul>
             <li>
@@ -122,9 +122,12 @@ export default function FaqPage() {
         <summary>Where do I find my Bluesky token?</summary>
         <div>
           <p>
-            Log in to your Bluesky account. Go to settings , Advanced,{' '}
-            <a href="https://bsky.app/settings/app-passwords">App Passwords</a>. Create a new
-            password and use it as your token.
+            Log in to your Bluesky account. Go to <code>Settings</code>,{' '}
+            <code>Privacy and Security</code>,{' '}
+            <code>
+              <a href="https://bsky.app/settings/app-passwords">App Passwords</a>
+            </code>
+            . Create a new password and use it as your token.
           </p>
         </div>
       </details>
