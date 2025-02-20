@@ -10,6 +10,7 @@ import BlogIcon from '@/components/icons/blog.tsx'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ConnectionIcon from '@/components/icons/connection.tsx'
+import { ShowToast } from '@/components/toast'
 
 export type FieldSet = {
   id: string
@@ -358,7 +359,7 @@ export default function DashboardPage() {
         throw new Error(json.error)
       })
       .catch((error) => {
-        toast(error.message)
+        ShowToast('Failed to create workflow', error.message)
         return null
       })
   }

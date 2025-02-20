@@ -15,10 +15,10 @@ export const ToastMessage: React.FC<ToastMessageProps> = ({ title, text }) => {
   )
 }
 
-export const ShowToast = (title = 'Fehler', text = 'Anfrage fehlgeschlagen') => {
-  console.log('show toast')
+export const ShowToast = (title = 'Error', text = 'Request failed') => {
+  console.log('show toast again')
   toast.error(<ToastMessage title={title} text={text} />, {
-    position: 'bottom-right',
+    theme: 'colored',
     data: { key: 'value' },
   })
 }
