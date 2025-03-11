@@ -66,10 +66,12 @@ export default async (request: Request, _context: Context) => {
             id: 'blueskyUserHandle',
             name: 'Bluesky User handle',
             type: 'text',
-            description: 'For example: USERNAME.bsky.social - use the full identifier domain',
-            errorHint: 'The handle should be in the format USERNAME.bsky.social',
+            description:
+              'For example: USERNAME.bsky.social - use the full identifier domain bsky.social or your custom domain',
+            errorHint:
+              'The handle should be in the format USERNAME.bsky.social or your custom domain',
             pattern: '^[a-zA-Z0-9_\\-]{1,60}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$',
-            placeholder: 'USERNAME.bsky.social',
+            placeholder: 'USERNAME.bsky.social or your custom domain',
           },
           {
             id: 'blueskyAccessToken',
