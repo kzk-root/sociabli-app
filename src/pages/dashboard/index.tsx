@@ -467,7 +467,7 @@ export default function DashboardPage() {
           </details>
         </div>
 
-        <h2>You have any feedback – please get in touch</h2>
+        <h2>Do you have any feedback? Please get in touch</h2>
         <p className="description">
           We would love to hear from you. If you have any feedback, questions or ideas, please get
           in touch at <a href="mailto:support@sociab.li">support@sociab.li</a>
