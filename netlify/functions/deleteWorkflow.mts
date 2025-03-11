@@ -29,6 +29,7 @@ export default async (request: Request, _context: Context) => {
         n8nApiKey: retrievePrivateMetadataResult.data.n8nApiKey,
         n8nMainWorkflowId: retrievePrivateMetadataResult.data.n8nMainWorkflowId,
         workflowId: requestBody.workflowId,
+        userId: retrievePrivateMetadataResult.data.userId,
       }),
     })
 
