@@ -21,6 +21,11 @@ export default function IndexPage() {
           Mastodon account as sources, but we are working on more!
         </p>
 
+        <p className="note">
+          We are currently facing some issues with our system. Creating flows will not work at the
+          moment. We are working on a fix and will update you as soon as possible.
+        </p>
+
         <p className="centered sticky">
           <SignedIn>
             <a href="/dashboard" className="btn btn-primary">

@@ -19,6 +19,15 @@
         top: 20px;
     }
 
+
+    .note {
+        background-color: #fef9f9;
+        padding: 20px;
+        border: 2px solid darkred;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+
     .btn {
         transition: all 0.4s;
         display: inline-block;
