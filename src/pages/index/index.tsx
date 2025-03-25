@@ -3,7 +3,6 @@ import MastodonIcon from '@/components/icons/mastodon.tsx'
 import ConnectionIcon from '@/components/icons/connection.tsx'
 import BlueskyIcon from '@/components/icons/bluesky.tsx'
 import BlogIcon from '@/components/icons/blog.tsx'
-import MediumIcon from '@/components/icons/medium.tsx'
 import LinkedInIcon from '@/components/icons/linkedin.tsx'
 
 export default function IndexPage() {
