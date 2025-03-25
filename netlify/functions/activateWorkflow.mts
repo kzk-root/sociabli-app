@@ -47,7 +47,7 @@ export default async (request: Request, _context: Context) => {
       body: JSON.stringify({
         userId: retrievePrivateMetadataResult.data.userId,
         n8nApiKey: retrievePrivateMetadataResult.data.n8nApiKey,
-        n8nMainWorkflowId: retrievePrivateMetadataResult.data.n8nMainWorkflowId,
+        // n8nMainWorkflowId: retrievePrivateMetadataResult.data.n8nMainWorkflowId,
         workflowId: requestBody.workflowId,
         fields,
       }),

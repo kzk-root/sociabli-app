@@ -38,10 +38,10 @@ export type Workflow = {
   status?: string
 }
 
-type UserData = {
-  path: string
-  credential: string
-}
+// type UserData = {
+//   path: string
+//   credential: string
+// }
 
 type Flow = {
   from: { label: string; icon: string }
@@ -52,21 +52,21 @@ export default function DashboardPage() {
   const { getToken } = useAuth()
   const [userWorkflows, setUserWorkflows] = useState<Workflow[]>([])
   const [workflows, setWorkflows] = useState<Workflow[]>([])
-  const [userData, setUserData] = useState<UserData>()
+  // const [userData, setUserData] = useState<UserData>()
   const [invalidFields, setInvalidFields] = useState<string[]>([])
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-    const msg = document.querySelector('.msg')
-
-    if (msg) {
-      msg.classList.add('show')
-
-      msg.addEventListener('animationend', () => {
-        msg.classList.remove('show')
-      })
-    }
-  }
+  // const copyToClipboard = (text: string) => {
+  //   navigator.clipboard.writeText(text)
+  //   const msg = document.querySelector('.msg')
+  //
+  //   if (msg) {
+  //     msg.classList.add('show')
+  //
+  //     msg.addEventListener('animationend', () => {
+  //       msg.classList.remove('show')
+  //     })
+  //   }
+  // }
 
   const renderIcon = (icon?: string) => {
     if (!icon) return null
@@ -216,62 +216,62 @@ export default function DashboardPage() {
       </ul>
     )
   }
+  //
+  // const renderUserData = () => {
+  //   if (!userData) {
+  //     return <div className={'no-data'}>No available workflows. Come back soon.</div>
+  //   }
+  //
+  //   return (
+  //     <>
+  //       <label htmlFor="path" data-tippy-content="Click to Copy">
+  //         WebhookId
+  //         <Tippy content="Click to Copy to clipboard" placement="top-start">
+  //           <input
+  //             type="text"
+  //             value={userData.path}
+  //             name="path"
+  //             id="path"
+  //             readOnly={true}
+  //             onClick={() => {
+  //               copyToClipboard(userData.path)
+  //             }}
+  //           />
+  //         </Tippy>
+  //       </label>
+  //       <label htmlFor="token" data-tippy-content="Click to Copy">
+  //         Token
+  //         <Tippy content="Click to Copy to clipboard" placement="top-start">
+  //           <input
+  //             type="text"
+  //             value={userData.credential}
+  //             name="token"
+  //             id="token"
+  //             readOnly={true}
+  //             onClick={() => {
+  //               copyToClipboard(userData.credential)
+  //             }}
+  //           />
+  //         </Tippy>
+  //       </label>
+  //     </>
+  //   )
+  // }
 
-  const renderUserData = () => {
-    if (!userData) {
-      return <div className={'no-data'}>No available workflows. Come back soon.</div>
-    }
-
-    return (
-      <>
-        <label htmlFor="path" data-tippy-content="Click to Copy">
-          WebhookId
-          <Tippy content="Click to Copy to clipboard" placement="top-start">
-            <input
-              type="text"
-              value={userData.path}
-              name="path"
-              id="path"
-              readOnly={true}
-              onClick={() => {
-                copyToClipboard(userData.path)
-              }}
-            />
-          </Tippy>
-        </label>
-        <label htmlFor="token" data-tippy-content="Click to Copy">
-          Token
-          <Tippy content="Click to Copy to clipboard" placement="top-start">
-            <input
-              type="text"
-              value={userData.credential}
-              name="token"
-              id="token"
-              readOnly={true}
-              onClick={() => {
-                copyToClipboard(userData.credential)
-              }}
-            />
-          </Tippy>
-        </label>
-      </>
-    )
-  }
-
-  const fetchUserData = async () => {
-    const token = await getToken()
-
-    fetch(`${EnvVars.netlifyFunctions}/getUserData`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setUserData(json)
-      })
-  }
+  // const fetchUserData = async () => {
+  //   const token = await getToken()
+  //
+  //   fetch(`${EnvVars.netlifyFunctions}/getUserData`, {
+  //     method: 'POST',
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       setUserData(json)
+  //     })
+  // }
 
   const fetchUserWorkflows = async () => {
     const token = await getToken()
@@ -392,7 +392,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       await fetchUserWorkflows()
-      await fetchUserData()
+      // await fetchUserData()
     }
 
     fetchData()
@@ -419,53 +419,53 @@ export default function DashboardPage() {
         </p>
         {renderWorkflow()}
 
-        <div className={'credentials'}>
-          <h2>Webhook</h2>
+        {/*        <div className={'credentials'}>*/}
+        {/*          <h2>Webhook</h2>*/}
 
-          <details className="creds animated-details">
-            <summary>Your Webhook credentials</summary>
-            <div className="details">{renderUserData()}</div>
-          </details>
+        {/*          <details className="creds animated-details">*/}
+        {/*            <summary>Your Webhook credentials</summary>*/}
+        {/*            <div className="details">{renderUserData()}</div>*/}
+        {/*          </details>*/}
 
-          <details className="animated-details">
-            <summary>How to use the Webhook</summary>
-            <div className="details">
-              <p>
-                In case you want to use the webhook directly because we not yet support your CMS,
-                you can do so. Send a <code>POST</code> request to:
-                <pre>
-                  <code className="code-block">https://webhook.sociab.li/{userData?.path}</code>
-                </pre>
-              </p>
-              <p>
-                With the following headers:
-                <pre>
-                  <code className="code-block">
-                    {`{
-  'Content-Type': 'application/json',
-  'Authorization': 'Bearer ${userData?.credential}'
-}`}
-                  </code>
-                </pre>
-              </p>
-              <p>
-                Send a body with the following structure:
-                <pre>
-                  <code className="code-block">
-                    {`{
-  'title': 'Your post title',
-  'intro': 'A short intro text',
-  'text': 'The main content of your post, Markdown is supported',
-  'tags': 'some, tags, for, your, post',
-  'url': 'canonical url of your post',
-  'publishStatus': 'draft' | 'published',
-}`}
-                  </code>
-                </pre>
-              </p>
-            </div>
-          </details>
-        </div>
+        {/*          <details className="animated-details">*/}
+        {/*            <summary>How to use the Webhook</summary>*/}
+        {/*            <div className="details">*/}
+        {/*              <p>*/}
+        {/*                In case you want to use the webhook directly because we not yet support your CMS,*/}
+        {/*                you can do so. Send a <code>POST</code> request to:*/}
+        {/*                <pre>*/}
+        {/*                  <code className="code-block">https://webhook.sociab.li/{userData?.path}</code>*/}
+        {/*                </pre>*/}
+        {/*              </p>*/}
+        {/*              <p>*/}
+        {/*                With the following headers:*/}
+        {/*                <pre>*/}
+        {/*                  <code className="code-block">*/}
+        {/*                    {`{*/}
+        {/*  'Content-Type': 'application/json',*/}
+        {/*  'Authorization': 'Bearer ${userData?.credential}'*/}
+        {/*}`}*/}
+        {/*                  </code>*/}
+        {/*                </pre>*/}
+        {/*              </p>*/}
+        {/*              <p>*/}
+        {/*                Send a body with the following structure:*/}
+        {/*                <pre>*/}
+        {/*                  <code className="code-block">*/}
+        {/*                    {`{*/}
+        {/*  'title': 'Your post title',*/}
+        {/*  'intro': 'A short intro text',*/}
+        {/*  'text': 'The main content of your post, Markdown is supported',*/}
+        {/*  'tags': 'some, tags, for, your, post',*/}
+        {/*  'url': 'canonical url of your post',*/}
+        {/*  'publishStatus': 'draft' | 'published',*/}
+        {/*}`}*/}
+        {/*                  </code>*/}
+        {/*                </pre>*/}
+        {/*              </p>*/}
+        {/*            </div>*/}
+        {/*          </details>*/}
+        {/*        </div>*/}
 
         <h2>Do you have any feedback? Please get in touch</h2>
         <p className="description">
