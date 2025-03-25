@@ -21,23 +21,6 @@ export default async (request: Request, _context: Context) => {
 
     const workflowList = [
       {
-        name: 'Weblog to Medium',
-        description: 'Each blog entry will be published on Medium',
-        id: 'blog_to_medium',
-        flow: {
-          from: { label: 'Blog', icon: 'BlogIcon' },
-          to: { label: 'Medium', icon: 'MediumIcon' },
-        },
-        fields: [
-          {
-            id: 'mediumAccessToken',
-            name: 'Medium Token',
-            type: 'password',
-            description: 'You can get your token from https://medium.com/me/settings',
-          },
-        ],
-      },
-      {
         name: 'Mastodon to Bluesky',
         description: 'Sync your Mastodon posts to Bluesky',
         id: 'mastodon_to_bluesky',
