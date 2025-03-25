@@ -154,6 +154,16 @@ export default function FaqPage() {
 
       <h2>Medium</h2>
       <details className="faq animated-details">
+        <summary>Where is the medium flow gone?</summary>
+        <div>
+          <p>
+            Unfortunately, we had to remove the Medium flow due to changes in the Medium API. Medium
+            closed it down, only manual posting and importing is possible. We are working on a
+            solution but we are not sure if we can provide one.
+          </p>
+        </div>
+      </details>
+      <details className="faq animated-details">
         <summary>Where do I find my Medium token?</summary>
         <div>
           <p>
@@ -165,19 +175,19 @@ export default function FaqPage() {
         </div>
       </details>
 
-      <details className="faq animated-details">
-        <summary>How do I use my CMS to cross post?</summary>
-        <div>
-          <p>
-            The easiest way is to use one of our plugins which are available for different CMS. You
-            can find links to them on your account page.
-          </p>
-          <p>
-            If there is no plugin for your CMS or static site generator, please get in touch with
-            us. You may also use our webhook directly.
-          </p>
-        </div>
-      </details>
+      {/*<details className="faq animated-details">*/}
+      {/*  <summary>How do I use my CMS to cross post?</summary>*/}
+      {/*  <div>*/}
+      {/*    <p>*/}
+      {/*      The easiest way is to use one of our plugins which are available for different CMS. You*/}
+      {/*      can find links to them on your account page.*/}
+      {/*    </p>*/}
+      {/*    <p>*/}
+      {/*      If there is no plugin for your CMS or static site generator, please get in touch with*/}
+      {/*      us. You may also use our webhook directly.*/}
+      {/*    </p>*/}
+      {/*  </div>*/}
+      {/*</details>*/}
     </div>
   )
 }
