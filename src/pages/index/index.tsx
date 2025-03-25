@@ -69,36 +69,35 @@ export default function IndexPage() {
           </div>
         </section>
 
-        <section>
-          <h3>Your Blog to Medium</h3>
-          <p className="description">
-            Publish your blog posts on Medium. Sociabli enables you to define which of your blog
-            posts should be cross posted to medium.com. Simply install the Sociabli plugin for your
-            CMS and connect it to Medium. We will take care of canonical links and other details, so
-            that you won't run into duplicate content on Google and other search engines.
-          </p>
+        {/*<section>*/}
+        {/*  <h3>Your Blog to Medium</h3>*/}
+        {/*    Publish your blog posts on Medium. Sociabli enables you to define which of your blog*/}
+        {/*    posts should be cross posted to medium.com. Simply install the Sociabli plugin for your*/}
+        {/*    CMS and connect it to Medium. We will take care of canonical links and other details, so*/}
+        {/*    that you won't run into duplicate content on Google and other search engines.*/}
+        {/*  </p>*/}
 
-          <div className="flow">
-            <div className="card">
-              <BlogIcon />
-              <p className="service">Your blog</p>
-            </div>
+        {/*  <div className="flow">*/}
+        {/*    <div className="card">*/}
+        {/*      <BlogIcon />*/}
+        {/*      <p className="service">Your blog</p>*/}
+        {/*    </div>*/}
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="connection"
-            >
-              <path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path>
-            </svg>
+        {/*    <svg*/}
+        {/*      xmlns="http://www.w3.org/2000/svg"*/}
+        {/*      viewBox="0 0 24 24"*/}
+        {/*      fill="currentColor"*/}
+        {/*      className="connection"*/}
+        {/*    >*/}
+        {/*      <path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path>*/}
+        {/*    </svg>*/}
 
-            <div className="card">
-              <MediumIcon />
-              <p className="service">Medium</p>
-            </div>
-          </div>
-        </section>
+        {/*    <div className="card">*/}
+        {/*      <MediumIcon />*/}
+        {/*      <p className="service">Medium</p>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</section>*/}
 
         <section>
           <h3>More flows will come!</h3>
