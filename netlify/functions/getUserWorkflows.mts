@@ -1,6 +1,7 @@
 import { Context } from '@netlify/functions'
 import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
+import supabaseClient from './utils/SupabaseClient.mjs'
 
 type Workflow = {
   id: string
@@ -60,61 +61,81 @@ export default async (request: Request, _context: Context) => {
     )
   }
 
-  try {
-    const customHeaders = new Headers()
-    customHeaders.set('X-N8N-API-KEY', retrievePrivateMetadataResult.data.n8nApiKey)
+  const userId = retrievePrivateMetadataResult.data.userId
 
-    const response = await fetch(FunctionEnvVars.n8nApiUrl + '/workflows', {
-      method: 'GET',
-      headers: customHeaders,
-    })
-
-    console.log('[getUserWorkflows] Prepare workflows')
-    const data = await response.json()
-    const workflowList: Workflow[] = []
-
-    for (const workflow of data.data) {
-      if (!workflow.tags.find((child: any) => child.name === 'hideInUi')) {
-        const executions = await getWorkflowExecutions(
-          workflow.id,
-          retrievePrivateMetadataResult.data.n8nApiKey
-        )
-
-        if (executions.data.length === 0) {
-          workflowList.push({
-            id: workflow.id,
-            name: workflow.name
-              .replace('Subworkflow - ', '')
-              .replace(` - ${retrievePrivateMetadataResult.data.userId}`, ''),
-            status: 'pending',
-          })
-          continue
-        }
-
-        const isRunning = executions.data.find((execution) => {
-          return execution.stoppedAt === null || execution.stoppedAt.length === 0
-        })
-
-        const isFinished = executions.data.find((execution) => execution.finished)
-        const status = isRunning ? 'running' : isFinished ? 'success' : 'error'
-
-        workflowList.push({
-          id: workflow.id,
-          name: workflow.name
-            .replace(` - ${retrievePrivateMetadataResult.data.userId}`, '')
-            .replace('Subworkflow - ', ''),
-          status: status,
-        })
-      }
-    }
-
-    return Response.json(workflowList)
-  } catch (error) {
-    console.log('[getUserWorkflows] Error thrown', error)
-    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
-    return Response.json(
-      { error: `Failed fetching user workflows: ${errorMessage}` },
-      { status: 500 }
+  const workflows = await supabaseClient
+    .from('sociabli_workflows')
+    .select(
+      `
+      id,
+      connection_from:sociabli_connections!sociabli_workflows_connection_from_fkey(id),
+      connection_to:sociabli_connections!sociabli_workflows_connection_to_fkey(id),
+      n8n_workflow_id
+    `
     )
-  }
+    .eq('user_id', userId)
+    .throwOnError()
+
+  console.log('[getUserWorkflows] Read workflows MTF', workflows)
+
+  return Response.json({ lmaa: true })
+
+  //
+  // try {
+  //   const customHeaders = new Headers()
+  //   customHeaders.set('X-N8N-API-KEY', retrievePrivateMetadataResult.data.n8nApiKey)
+  //
+  //   const response = await fetch(FunctionEnvVars.n8nApiUrl + '/workflows', {
+  //     method: 'GET',
+  //     headers: customHeaders,
+  //   })
+  //
+  //   console.log('[getUserWorkflows] Prepare workflows')
+  //   const data = await response.json()
+  //   const workflowList: Workflow[] = []
+  //
+  //   for (const workflow of data.data) {
+  //     if (!workflow.tags.find((child: any) => child.name === 'hideInUi')) {
+  //       const executions = await getWorkflowExecutions(
+  //         workflow.id,
+  //         retrievePrivateMetadataResult.data.n8nApiKey
+  //       )
+  //
+  //       if (executions.data.length === 0) {
+  //         workflowList.push({
+  //           id: workflow.id,
+  //           name: workflow.name
+  //             .replace('Subworkflow - ', '')
+  //             .replace(` - ${retrievePrivateMetadataResult.data.userId}`, ''),
+  //           status: 'pending',
+  //         })
+  //         continue
+  //       }
+  //
+  //       const isRunning = executions.data.find((execution) => {
+  //         return execution.stoppedAt === null || execution.stoppedAt.length === 0
+  //       })
+  //
+  //       const isFinished = executions.data.find((execution) => execution.finished)
+  //       const status = isRunning ? 'running' : isFinished ? 'success' : 'error'
+  //
+  //       workflowList.push({
+  //         id: workflow.id,
+  //         name: workflow.name
+  //           .replace(` - ${retrievePrivateMetadataResult.data.userId}`, '')
+  //           .replace('Subworkflow - ', ''),
+  //         status: status,
+  //       })
+  //     }
+  //   }
+  //
+  //   return Response.json(workflowList)
+  // } catch (error) {
+  //   console.log('[getUserWorkflows] Error thrown', error)
+  //   const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+  //   return Response.json(
+  //     { error: `Failed fetching user workflows: ${errorMessage}` },
+  //     { status: 500 }
+  //   )
+  // }
 }

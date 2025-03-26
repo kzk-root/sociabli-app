@@ -7,10 +7,11 @@ import MastodonIcon from '@/components/icons/mastodon.tsx'
 import BlueskyIcon from '@/components/icons/bluesky.tsx'
 import MediumIcon from '@/components/icons/medium.tsx'
 import BlogIcon from '@/components/icons/blog.tsx'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ConnectionIcon from '@/components/icons/connection.tsx'
-import { ShowToast } from '@/components/toast'
+import { ShowErrorToast } from '@/components/toast'
+import { Connections } from '@/pages/dashboard/components/Connections'
 
 export type FieldSet = {
   id: string
@@ -359,7 +360,7 @@ export default function DashboardPage() {
         throw new Error(json.error)
       })
       .catch((error) => {
-        ShowToast('Failed to create workflow', error.message)
+        ShowErrorToast('Failed to create workflow', error.message)
         return null
       })
   }
@@ -411,6 +412,9 @@ export default function DashboardPage() {
 
         <h2>Your flows</h2>
         {renderUserWorkflows()}
+
+        <h2>Connections</h2>
+        <Connections />
 
         <h2>Available flows</h2>
         <p className="description">
@@ -473,7 +477,6 @@ export default function DashboardPage() {
           in touch at <a href="mailto:support@sociab.li">support@sociab.li</a>
         </p>
       </div>
-      <ToastContainer position="bottom-center" />
     </>
   )
 }

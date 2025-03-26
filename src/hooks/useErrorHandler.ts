@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { StoreError } from '@/types.ts'
-import { ShowToast } from '@/components/toast'
+import { ShowErrorToast } from '@/components/toast'
 
 type DialogProps = {
   visible: boolean
@@ -86,7 +86,7 @@ function handleError(action: () => void, error?: StoreError) {
     return
   }
 
-  ShowToast(error?.title, error?.detail)
+  ShowErrorToast(error?.title, error?.detail)
 }
 
 export function useErrorHandler() {

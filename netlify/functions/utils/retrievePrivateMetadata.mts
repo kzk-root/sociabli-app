@@ -23,7 +23,6 @@ type Params = {
   request: Request
 }
 
-// FIXME: use env var wrapper
 const clerkClient = createClerkClient({ secretKey: FunctionEnvVars.clerkToken })
 
 export default async (params: Params): Promise<Result<RetrieveSuccess, RetrieveError>> => {
