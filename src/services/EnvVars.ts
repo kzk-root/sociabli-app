@@ -3,6 +3,11 @@ const EnvVars = () => {
   const appVersion = __VERSION__
   const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
   const netlifyFunctions = import.meta.env.VITE_NETLIFY_FUNCTIONS
+  const logLevel = import.meta.env.VITE_LOG_LEVEL
+
+  if (!logLevel) {
+    throw new Error('Missing VITE_LOG_LEVEL')
+  }
 
   if (!appEnv) {
     throw new Error('Missing VITE_APP_ENV')
@@ -21,6 +26,7 @@ const EnvVars = () => {
     appVersion,
     clerkPublishableKey,
     netlifyFunctions,
+    logLevel,
   }
 }
 

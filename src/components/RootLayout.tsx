@@ -1,6 +1,7 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react'
 import EnvVars from '@/services/EnvVars.ts'
+import { ToastContainer } from 'react-toastify'
 
 export default function RootLayout() {
   const navigate = useNavigate()
@@ -34,6 +35,7 @@ export default function RootLayout() {
         <Link to="/terms">Terms of Service</Link>
         <Link to="/imprint">Imprint</Link>
       </footer>
+      <ToastContainer position="bottom-center" />
     </ClerkProvider>
   )
 }

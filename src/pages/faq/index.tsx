@@ -65,18 +65,18 @@ export default function FaqPage() {
           </p>
         </div>
       </details>
-      <details className="faq animated-details">
-        <summary>What are the WebhookId and token?</summary>
-        <div>
-          <p>
-            In order to trigger cross posting from your website, you have to call our webhook. In
-            order to do so, you have to use your personal Webhook, identified by the webhookId. To
-            make sure, it's really you calling the webhook, you also have to send your personal
-            token.
-          </p>
-          <p>Both can be found on your account page.</p>
-        </div>
-      </details>
+      {/*<details className="faq animated-details">*/}
+      {/*  <summary>What are the WebhookId and token?</summary>*/}
+      {/*  <div>*/}
+      {/*    <p>*/}
+      {/*      In order to trigger cross posting from your website, you have to call our webhook. In*/}
+      {/*      order to do so, you have to use your personal Webhook, identified by the webhookId. To*/}
+      {/*      make sure, it's really you calling the webhook, you also have to send your personal*/}
+      {/*      token.*/}
+      {/*    </p>*/}
+      {/*    <p>Both can be found on your account page.</p>*/}
+      {/*  </div>*/}
+      {/*</details>*/}
       <details className="faq animated-details">
         <summary>There is no Sociabli Plugin for my CMS</summary>
         <div>
@@ -163,17 +163,17 @@ export default function FaqPage() {
           </p>
         </div>
       </details>
-      <details className="faq animated-details">
-        <summary>Where do I find my Medium token?</summary>
-        <div>
-          <p>
-            Click on your avatar, in the menu open{' '}
-            <a href="https://medium.com/me/settings">settings</a>. Switch to the{' '}
-            <a href="https://medium.com/me/settings/security">security tab</a>, you will find
-            "Integration tokens" on the bottom of the page. Click on it and create a new one.
-          </p>
-        </div>
-      </details>
+      {/*<details className="faq animated-details">*/}
+      {/*  <summary>Where do I find my Medium token?</summary>*/}
+      {/*  <div>*/}
+      {/*    <p>*/}
+      {/*      Click on your avatar, in the menu open{' '}*/}
+      {/*      <a href="https://medium.com/me/settings">settings</a>. Switch to the{' '}*/}
+      {/*      <a href="https://medium.com/me/settings/security">security tab</a>, you will find*/}
+      {/*      "Integration tokens" on the bottom of the page. Click on it and create a new one.*/}
+      {/*    </p>*/}
+      {/*  </div>*/}
+      {/*</details>*/}
 
       {/*<details className="faq animated-details">*/}
       {/*  <summary>How do I use my CMS to cross post?</summary>*/}

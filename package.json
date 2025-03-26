@@ -40,6 +40,7 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
+    "@supabase/supabase-js": "^2.49.3",
     "@tippyjs/react": "^4.2.6",
     "better-npm-audit": "^3.7.3",
     "crypto-js": "^4.2.0",
