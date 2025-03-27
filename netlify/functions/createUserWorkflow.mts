@@ -33,7 +33,7 @@ export default async (request: Request, _context: Context) => {
     return Response.json({ message: 'Invalid connectionTo' }, { status: 400 })
   }
 
-  // TODO: determine type of workflow defined by from.connection_type :: to.connection_type
+  // FIXME: determine type of workflow defined by from.connection_type :: to.connection_type
   // e.g. mastodon_to_bluesky
   const workflowType = 'mastodon_to_bluesky'
 
@@ -54,8 +54,6 @@ export default async (request: Request, _context: Context) => {
       workflowType: workflowType,
       sociabliWorkflowId: sociabliWorkflowId, // the postgresql workflow id from table sociabli_workflows (not the n8n workflow id)
       configuration: {
-        blueskyUserHandle: '', // FIXME
-        blueskyAppPassword: '', // FIXME
         mastodonFeedUrl: 'http://instance/@handle.rss', // FIXME
       },
     }),
