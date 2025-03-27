@@ -1,0 +1,16 @@
+{
+  // Must be the same URL as the one used to obtain this JSON object
+  client_id: 'https://sociab.li/bluesky-client-metadata.json',
+  client_name: 'Sociabli',
+  client_uri: 'https://sociab.li',
+  logo_uri: 'https://sociab.li/sociabli.svg',
+  tos_uri: 'https://sociab.li/tos',
+  policy_uri: 'https://sociab.li/policy',
+  redirect_uris: ['https://sociab.li/bluesky-callback'],
+  scope: 'atproto',
+  grant_types: ['authorization_code', 'refresh_token'],
+  response_types: ['code'],
+  token_endpoint_auth_method: 'none',
+  application_type: 'web',
+  dpop_bound_access_tokens: true,
+}
