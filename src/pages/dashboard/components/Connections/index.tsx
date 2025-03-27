@@ -4,13 +4,18 @@ import { useCallback, useEffect, useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { ConnectionTypeIcon } from '@/pages/dashboard/components/ConnectionTypeIcon'
 import { Loader } from '@/pages/dashboard/components/Loader'
+import { ShowErrorToast, ShowSuccessToast } from '@/components/toast'
+import log from 'loglevel'
+import { useNavigate } from 'react-router-dom'
 
 export const Connections = () => {
   const { getToken } = useAuth()
+  const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
   const [userConnections, setUserConnections] = useState([])
   const [showMastodonForm, setShowMastodonForm] = useState(false)
+  const [showBlueskyForm, setShowBlueskyForm] = useState(false)
 
   const disconnectMastodon = async (id: any) => {
     const token = await getToken()
@@ -59,6 +64,38 @@ export const Connections = () => {
       })
       .catch(() => {
         toast('Could not connect. Please try again later.')
+      })
+  }
+
+  const connectBluesky = async (event: any) => {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    const userHandle = formData.get('userHandle') as string
+    const appPassword = formData.get('appPassword') as string
+    const token = await getToken()
+
+    fetch(`${EnvVars.netlifyFunctions}/blueskyCreateConnection`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ userHandle, appPassword }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          ShowSuccessToast('Successful', 'Connection created successfully')
+          return
+        }
+
+        ShowErrorToast('Error', 'Could not connect. Please try again later.')
+      })
+      .catch(() => {
+        log.debug('Could not connect. Please try again later.')
+        ShowErrorToast('Error', 'Could not connect. Please try again later.')
+      })
+      .finally(() => {
+        setShowBlueskyForm(false)
+        window.location.reload()
       })
   }
 
@@ -142,6 +179,16 @@ export const Connections = () => {
             <ConnectionTypeIcon connectionType="mastodon" />
           </div>
         </li>
+        <li
+          key={'bluesky'}
+          onClick={() => {
+            setShowBlueskyForm(true)
+          }}
+        >
+          <div className="new-connection">
+            <ConnectionTypeIcon connectionType="bluesky" />
+          </div>
+        </li>
       </ul>
 
       {showMastodonForm && (
@@ -154,6 +201,34 @@ export const Connections = () => {
 
             <div className="footer">
               <button className={'cancel'} type="button" onClick={() => setShowMastodonForm(false)}>
+                Cancel
+              </button>
+              <button type="submit">Connect</button>
+            </div>
+          </form>
+        </dialog>
+      )}
+
+      {showBlueskyForm && (
+        <dialog id={'blueskyConnection'}>
+          <form onSubmit={connectBluesky}>
+            <label>User handle</label>
+            <input
+              type={'text'}
+              name={'userHandle'}
+              placeholder={'USERNAME.bsky.social or your custom domain'}
+              pattern={'^[a-zA-Z0-9_\\-]{1,60}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$'}
+            />
+
+            <label>App password</label>
+            <input
+              type={'password'}
+              name={'appPassword'}
+              pattern={'^[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}$'}
+            />
+
+            <div className="footer">
+              <button className={'cancel'} type="button" onClick={() => setShowBlueskyForm(false)}>
                 Cancel
               </button>
               <button type="submit">Connect</button>
