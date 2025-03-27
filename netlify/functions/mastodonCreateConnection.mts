@@ -88,6 +88,7 @@ export default async (request: Request, _context: Context) => {
         label: `${instanceHostname} - ${requestBody.mastodonUserHandle}`,
         configuration: {
           accessToken: tokenData.access_token,
+          userId: userDetails.id,
           userHandle: requestBody.mastodonUserHandle,
           instanceHostname: instanceHostname,
         },
@@ -97,6 +98,8 @@ export default async (request: Request, _context: Context) => {
 
     return Response.json({}, { status: 201 })
   } catch (e) {
+    console.error('[MastodonCreateConnection] Error', e)
+
     if (e instanceof Error) {
       return Response.json({ message: e.message }, { status: 500 })
     }
