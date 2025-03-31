@@ -6,7 +6,7 @@ import { UserFlows } from '@/pages/dashboard/components/UserFlows'
 
 export default function DashboardPage() {
   const onFlowCreated = () => {
-    console.log('HI')
+    window.location.reload()
   }
 
   return (

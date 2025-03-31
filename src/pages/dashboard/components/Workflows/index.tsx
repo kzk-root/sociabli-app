@@ -6,6 +6,7 @@ import { ShowErrorToast } from '@/components/toast'
 import EnvVars from '@/services/EnvVars.ts'
 import { useAuth } from '@clerk/clerk-react'
 import { toast } from 'react-toastify'
+import { Loader } from '@/pages/dashboard/components/Loader'
 
 export type FieldSet = {
   id: string
@@ -41,6 +42,7 @@ interface Props {
 export const Workflows = ({ onCreated }: Props) => {
   const { getToken } = useAuth()
 
+  const [isLoading, setIsLoading] = useState(true)
   const [workflows, setWorkflows] = useState<Workflow[]>([])
   const [userConnections, setUserConnections] = useState([])
 
@@ -52,6 +54,7 @@ export const Workflows = ({ onCreated }: Props) => {
     const connectionFrom = formData.get('connectionFrom')
     const connectionTo = formData.get('connectionTo')
 
+    setIsLoading(true)
     await fetch(`${EnvVars.netlifyFunctions}/createUserWorkflow`, {
       method: 'POST',
       headers: {
@@ -66,6 +69,7 @@ export const Workflows = ({ onCreated }: Props) => {
       .then((json) => {
         // happy path: no code, means no error
         if (!json.code) {
+          setIsLoading(false)
           onCreated()
           return
         }
@@ -115,6 +119,7 @@ export const Workflows = ({ onCreated }: Props) => {
     const fetchData = async () => {
       const token = await getToken()
 
+      setIsLoading(true)
       fetch(`${EnvVars.netlifyFunctions}/getWorkflows`, {
         method: 'POST',
         headers: {
@@ -124,6 +129,7 @@ export const Workflows = ({ onCreated }: Props) => {
         .then((res) => res.json())
         .then((json) => {
           setWorkflows(json)
+          setIsLoading(false)
         })
 
       fetch(`${EnvVars.netlifyFunctions}/getUserConnections`, {
@@ -144,6 +150,10 @@ export const Workflows = ({ onCreated }: Props) => {
     fetchData()
   }, [])
 
+  if (isLoading) {
+    return <Loader />
+  }
+
   if (!workflows || !Array.isArray(workflows) || workflows.length === 0) {
     return <div className={'no-data'}>Loading available flows…</div>
   }
@@ -158,12 +168,12 @@ export const Workflows = ({ onCreated }: Props) => {
           <li key={workflow.id}>
             <details className="animated-details">
               <summary className="flow small-flow">
-                <div className="card card1">
+                <div className="card-base flow-connection card1">
                   <ConnectionTypeIcon connectionType={workflow.flow?.from.icon || ''} />
                   <p className="service">{workflow.flow?.from.label}</p>
                 </div>
                 <ConnectionIcon />
-                <div className="card card2">
+                <div className="card-base flow-connection card2">
                   <ConnectionTypeIcon connectionType={workflow.flow?.to.icon || ''} />
                   <p className="service">{workflow.flow?.to.label}</p>
                 </div>

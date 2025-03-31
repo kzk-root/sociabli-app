@@ -24,36 +24,34 @@
         }
     }
 
+    .service {
+        font-size: 1.2rem;
+        color: #444444;
+    }
+
+    .flow-connection {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 6fr;
+        align-content: center;
+        align-items: center;
+        gap: 10px;
+
+        svg {
+            width: 60px;
+        }
+
+        em {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+    }
+
     @media (max-width: 768px) {
         display: block;
         margin-bottom: 5rem;
     }
 }
-
-.card {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-    align-content: center;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-    svg {
-        width: 60px;
-    }
-
-    em {
-        display: inline-block;
-        margin-bottom: 0.5rem;
-    }
-}
-
 
 .connection {
     position: relative;
@@ -66,10 +64,6 @@
     }
 }
 
-.service {
-    font-size: 1.5rem;
-    color: #444444;
-}
 
 /* Connecting line animation */
 .connection line {
@@ -87,8 +81,8 @@
         padding: 10px;
 
         svg {
-        width: 30px;
-    }
+            width: 30px;
+        }
     }
 
     .card1 {
@@ -101,6 +95,24 @@
 
     .card2 {
         animation: card2-glow 2s ease-in-out infinite 1.2s; /* Delay to follow the line */
+    }
+}
+
+.error-flow {
+    .card {
+        padding: 10px;
+
+        svg {
+            width: 30px;
+        }
+    }
+
+    .card1 {
+        border: 1px solid #ff0000;
+    }
+
+    .card2 {
+        border: 1px solid #ff0000;
     }
 }
 

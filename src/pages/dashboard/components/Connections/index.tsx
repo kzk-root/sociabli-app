@@ -148,6 +148,26 @@ export const Connections = () => {
       })
   }, [])
 
+  const renderConnections = () => {
+    if (isLoading) {
+      return <Loader />
+    }
+
+    if (userConnections.length === 0) {
+      return (
+        <div className={'no-data'}>
+          No connections found. You can create a new one by clicking on the service above.
+        </div>
+      )
+    }
+
+    return (
+      <ul className={'user-connections'}>
+        {userConnections.map((connection: any) => renderConnection(connection))}
+      </ul>
+    )
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       await fetchConnections()
@@ -155,10 +175,6 @@ export const Connections = () => {
 
     fetchData()
   }, [])
-
-  if (isLoading) {
-    return <Loader />
-  }
 
   return (
     <>
@@ -233,9 +249,7 @@ export const Connections = () => {
       )}
 
       <h4>Your connections</h4>
-      <ul className={'user-connections'}>
-        {userConnections.map((connection: any) => renderConnection(connection))}
-      </ul>
+      {renderConnections()}
     </>
   )
 }
