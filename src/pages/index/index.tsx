@@ -41,7 +41,7 @@ export default function IndexPage() {
           </p>
 
           <div className="flow">
-            <div className="card">
+            <div className="card-base flow-connection">
               <MastodonIcon />
               <p>
                 <em>@user@mastodon.social</em>
@@ -52,7 +52,7 @@ export default function IndexPage() {
 
             <ConnectionIcon />
 
-            <div className="card">
+            <div className="card-base flow-connection">
               <BlueskyIcon />
               <p>
                 <em>user.bsky.social</em>
@@ -102,7 +102,7 @@ export default function IndexPage() {
           </p>
 
           <div className="flow">
-            <div className="card">
+            <div className="card-base  flow-connection">
               <BlueskyIcon />
               <p className="service">Bluesky</p>
             </div>
@@ -115,14 +115,14 @@ export default function IndexPage() {
               <path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path>
             </svg>
 
-            <div className="card">
+            <div className="card-base  flow-connection">
               <MastodonIcon />
               <p className="service">Mastodon</p>
             </div>
           </div>
 
           <div className="flow">
-            <div className="card">
+            <div className="card-base  flow-connection">
               <BlogIcon />
               <p className="service">Your blog</p>
             </div>
@@ -136,14 +136,14 @@ export default function IndexPage() {
               <path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path>
             </svg>
 
-            <div className="card">
+            <div className="card-base  flow-connection">
               <LinkedInIcon />
               <p className="service">LinkedIn</p>
             </div>
           </div>
 
           <div className="flow dimmed">
-            <div className="card">
+            <div className="card-base  flow-connection">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -165,7 +165,7 @@ export default function IndexPage() {
               <path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path>
             </svg>
 
-            <div className="card">
+            <div className="card-base  flow-connection">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM7 12H9C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12H17C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12Z"></path>
               </svg>
