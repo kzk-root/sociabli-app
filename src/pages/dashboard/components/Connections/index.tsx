@@ -227,7 +227,7 @@ export const Connections = () => {
             <input
               type={'text'}
               name={'userHandle'}
-              placeholder={'@USERNAME.bsky.social or your custom domain'}
+              placeholder={'@bluesky-handle'}
               pattern={'^(@|)[a-zA-Z0-9_\\-]{1,60}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$'}
             />
 
