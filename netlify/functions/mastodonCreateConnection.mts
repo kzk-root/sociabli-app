@@ -3,6 +3,12 @@ import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 import supabaseClient from './utils/SupabaseClient.mjs'
 import { Context } from '@netlify/functions'
 
+/**
+ * Create new mastodon connection for user.
+ *
+ * @param request
+ * @param _context
+ */
 export default async (request: Request, _context: Context) => {
   console.log('[MastodonCreateConnection] Start')
 
@@ -62,6 +68,7 @@ export default async (request: Request, _context: Context) => {
     })
 
     const tokenData = await tokenResponse.json()
+    console.log(`[MastodonCreateConnection] Result of getMastodonToken`, tokenData)
 
     if (!tokenResponse.ok) {
       console.log(`[MastodonCreateConnection] Result of getMastodonToken`, tokenData)
@@ -81,6 +88,8 @@ export default async (request: Request, _context: Context) => {
       throw new Error(`Failed to get Mastodon user details.`)
     }
 
+    console.log(`[MastodonCreateConnector] Result of getMastodonDetails`, userDetails)
+
     await supabaseClient
       .from('sociabli_connections')
       .insert({
@@ -90,6 +99,7 @@ export default async (request: Request, _context: Context) => {
           accessToken: tokenData.access_token,
           userId: userDetails.id,
           userHandle: requestBody.mastodonUserHandle,
+          userAvatar: userDetails.avatar,
           instanceHostname: instanceHostname,
         },
         connection_type: 'mastodon',

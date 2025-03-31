@@ -1,6 +1,11 @@
 import { BskyAgent, RichText } from '@atproto/api'
 import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 
+/**
+ * Retrieve facets for Bluesky posts - e.g. referenced from n8n Mastodon-to-Bluesky workflow.
+ *
+ * @param request
+ */
 export default async (request: Request) => {
   console.log('[blueskyFacetDetection] Start')
 

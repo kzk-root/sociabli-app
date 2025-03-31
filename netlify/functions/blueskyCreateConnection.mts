@@ -2,6 +2,12 @@ import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 import supabaseClient from './utils/SupabaseClient.mjs'
 import { Context } from '@netlify/functions'
 
+/**
+ * Create new connection to Bluesky.
+ *
+ * @param request
+ * @param _context
+ */
 export default async (request: Request, _context: Context) => {
   console.log('[BlueskyCreateConnection] Start')
 

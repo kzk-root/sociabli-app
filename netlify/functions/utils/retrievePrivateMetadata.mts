@@ -25,6 +25,11 @@ type Params = {
 
 const clerkClient = createClerkClient({ secretKey: FunctionEnvVars.clerkToken })
 
+/**
+ * Validate JWT and extract user metadata.
+ *
+ * @param params
+ */
 export default async (params: Params): Promise<Result<RetrieveSuccess, RetrieveError>> => {
   const authHeader = params.request.headers.get('Authorization')
   const token = authHeader && authHeader.split(' ')[1]

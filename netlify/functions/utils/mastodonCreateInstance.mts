@@ -1,6 +1,13 @@
 import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 import supabaseClient from './SupabaseClient.mts'
 
+/**
+ * Register our application on instance and store result in postgres.
+ * We store secret for later instance api calls.
+ *
+ * @param instanceHostname
+ * @constructor
+ */
 export const MastodonCreateInstance = async (instanceHostname: string) => {
   const data = {
     client_name: 'Sociabli',

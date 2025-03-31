@@ -2,6 +2,12 @@ import supabaseClient from './utils/SupabaseClient.mjs'
 import { Context } from '@netlify/functions'
 import FunctionEnvVars from './utils/FunctionEnvVars.mjs'
 
+/**
+ * Retrieve single workflow with its resolved connections. Used from within n8n execution.
+ *
+ * @param request
+ * @param _context
+ */
 export default async (request: Request, _context: Context) => {
   console.log('[GetUserWorkflowConnections] Start')
 

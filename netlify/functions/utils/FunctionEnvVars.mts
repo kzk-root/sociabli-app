@@ -35,11 +35,11 @@ if (!supabaseKey) {
 }
 
 if (!mastodonAppRedirectUrl) {
-  throw new Error('SUPABASE_KEY is not defined')
+  throw new Error('MASTODON_APP_REDIRECT_URL is not defined')
 }
 
 if (!mastodonAppScopes) {
-  throw new Error('SUPABASE_KEY is not defined')
+  throw new Error('MASTODON_APP_SCOPES is not defined')
 }
 
 const FunctionEnvVars = {

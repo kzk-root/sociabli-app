@@ -2,6 +2,12 @@ import { Context } from '@netlify/functions'
 import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 import supabaseClient from './utils/SupabaseClient.mjs'
 
+/**
+ * Retrieve list of user connections from database
+ *
+ * @param request
+ * @param _context
+ */
 export default async (request: Request, _context: Context) => {
   console.log('[getUserConnections] Start')
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })

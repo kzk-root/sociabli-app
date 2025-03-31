@@ -3,6 +3,13 @@ import supabaseClient from './utils/SupabaseClient.mjs'
 import { MastodonCreateInstance } from './utils/mastodonCreateInstance.mjs'
 import FunctionEnvVars from './utils/FunctionEnvVars.mjs'
 
+/**
+ * Create Mastodon instance entry for sociabli application in context of user mastodon connection creation.
+ * This happens once for each Mastodon instance.
+ *
+ * @param request
+ * @param _context
+ */
 export default async (request: Request, _context: Context) => {
   console.log('[mastodonGetInstance] Start')
 

@@ -3,12 +3,6 @@ import retrievePrivateMetadata from './utils/retrievePrivateMetadata.mjs'
 import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 import supabaseClient from './utils/SupabaseClient.mjs'
 
-type Workflow = {
-  id: string
-  name: string
-  status: 'pending' | 'running' | 'success' | 'error'
-}
-
 type ExecutionResponseItem = {
   id: string
   finished: boolean
@@ -26,6 +20,12 @@ type ExecutionResponse = {
   nextCursor: null | string
 }
 
+/**
+ * Retrieve all user workflows with the resolved connections and the workflow n8n state
+ *
+ * @param workflowId
+ * @param n8nApiKey
+ */
 const getWorkflowExecutions = async (
   workflowId: string,
   n8nApiKey: string
@@ -48,6 +48,18 @@ const getWorkflowExecutions = async (
   }
 }
 
+type WorkflowConnection = {
+  connectionType: string
+  label: string
+}
+
+type WorkflowExecution = {
+  id: string // sociabli workflow id from table "sociabli_workflows"
+  status: 'pending' | 'running' | 'success' | 'error' // n8n internal status value
+  connectionFrom: WorkflowConnection
+  connectionTo: WorkflowConnection
+}
+
 export default async (request: Request, _context: Context) => {
   console.log('[getUserWorkflows] Start')
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })
@@ -63,79 +75,64 @@ export default async (request: Request, _context: Context) => {
 
   const userId = retrievePrivateMetadataResult.data.userId
 
-  const workflows = await supabaseClient
-    .from('sociabli_workflows')
-    .select(
-      `
+  try {
+    const workflowResult = await supabaseClient
+      .from('sociabli_workflows')
+      .select(
+        `
       id,
-      connection_from:sociabli_connections!sociabli_workflows_connection_from_fkey(id),
-      connection_to:sociabli_connections!sociabli_workflows_connection_to_fkey(id),
+      connection_from:sociabli_connections!sociabli_workflows_connection_from_fkey(id,connection_type,label),
+      connection_to:sociabli_connections!sociabli_workflows_connection_to_fkey(id,connection_type,label),
       n8n_workflow_id
     `
+      )
+      .eq('user_id', userId)
+      .throwOnError()
+
+    const workflows: WorkflowExecution[] = []
+    const n8nApiKey = retrievePrivateMetadataResult.data.n8nApiKey
+
+    for await (const workflow of workflowResult.data) {
+      const n8nWorkflowExecutionResult = await getWorkflowExecutions(
+        workflow.n8n_workflow_id,
+        n8nApiKey
+      )
+
+      const connectionTo = {
+        // @ts-ignore Supabase’s TypeScript generator defaults to assuming foreign keys can return multiple rows
+        connectionType: workflow.connection_to.connection_type,
+        // @ts-ignore Supabase’s TypeScript generator defaults to assuming foreign keys can return multiple rows
+        label: workflow.connection_to.label,
+      }
+      const connectionFrom = {
+        // @ts-ignore Supabase’s TypeScript generator defaults to assuming foreign keys can return multiple rows
+        connectionType: workflow.connection_from.connection_type,
+        // @ts-ignore Supabase’s TypeScript generator defaults to assuming foreign keys can return multiple rows
+        label: workflow.connection_from.label,
+      }
+
+      if (n8nWorkflowExecutionResult.data.length === 0) {
+        workflows.push({ id: workflow.id, status: 'pending', connectionTo, connectionFrom })
+        continue
+      }
+
+      const isRunning = n8nWorkflowExecutionResult.data.find((execution) => {
+        return execution.stoppedAt === null || execution.stoppedAt.length === 0
+      })
+
+      const isFinished = n8nWorkflowExecutionResult.data.find((execution) => execution.finished)
+      const status = isRunning ? 'running' : isFinished ? 'success' : 'error'
+
+      workflows.push({ id: workflow.id, status: status, connectionTo, connectionFrom })
+    }
+
+    return Response.json(workflows)
+  } catch (error) {
+    console.log('[getUserWorkflows] Error thrown', error)
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+    return Response.json(
+      { error: `Failed fetching user workflows: ${errorMessage}` },
+      { status: 500 }
     )
-    .eq('user_id', userId)
-    .throwOnError()
-
-  console.log('[getUserWorkflows] Read workflows MTF', workflows)
-
-  return Response.json({ lmaa: true })
-
-  //
-  // try {
-  //   const customHeaders = new Headers()
-  //   customHeaders.set('X-N8N-API-KEY', retrievePrivateMetadataResult.data.n8nApiKey)
-  //
-  //   const response = await fetch(FunctionEnvVars.n8nApiUrl + '/workflows', {
-  //     method: 'GET',
-  //     headers: customHeaders,
-  //   })
-  //
-  //   console.log('[getUserWorkflows] Prepare workflows')
-  //   const data = await response.json()
-  //   const workflowList: Workflow[] = []
-  //
-  //   for (const workflow of data.data) {
-  //     if (!workflow.tags.find((child: any) => child.name === 'hideInUi')) {
-  //       const executions = await getWorkflowExecutions(
-  //         workflow.id,
-  //         retrievePrivateMetadataResult.data.n8nApiKey
-  //       )
-  //
-  //       if (executions.data.length === 0) {
-  //         workflowList.push({
-  //           id: workflow.id,
-  //           name: workflow.name
-  //             .replace('Subworkflow - ', '')
-  //             .replace(` - ${retrievePrivateMetadataResult.data.userId}`, ''),
-  //           status: 'pending',
-  //         })
-  //         continue
-  //       }
-  //
-  //       const isRunning = executions.data.find((execution) => {
-  //         return execution.stoppedAt === null || execution.stoppedAt.length === 0
-  //       })
-  //
-  //       const isFinished = executions.data.find((execution) => execution.finished)
-  //       const status = isRunning ? 'running' : isFinished ? 'success' : 'error'
-  //
-  //       workflowList.push({
-  //         id: workflow.id,
-  //         name: workflow.name
-  //           .replace(` - ${retrievePrivateMetadataResult.data.userId}`, '')
-  //           .replace('Subworkflow - ', ''),
-  //         status: status,
-  //       })
-  //     }
-  //   }
-  //
-  //   return Response.json(workflowList)
-  // } catch (error) {
-  //   console.log('[getUserWorkflows] Error thrown', error)
-  //   const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
-  //   return Response.json(
-  //     { error: `Failed fetching user workflows: ${errorMessage}` },
-  //     { status: 500 }
-  //   )
-  // }
+  }
 }
