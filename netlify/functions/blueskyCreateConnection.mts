@@ -26,16 +26,20 @@ export default async (request: Request, _context: Context) => {
   }
 
   const requestBody = await request.json()
-  const userHandle = requestBody.userHandle
+  let blueskyUserHandle = requestBody.userHandle
   const appPassword = requestBody.appPassword
 
   if (
-    !userHandle ||
-    typeof userHandle !== 'string' ||
+    !blueskyUserHandle ||
+    typeof blueskyUserHandle !== 'string' ||
     !appPassword ||
     typeof appPassword !== 'string'
   ) {
     return Response.json({ message: 'Missing userHandle or appPassword' }, { status: 400 })
+  }
+
+  if (!blueskyUserHandle.startsWith('@')) {
+    blueskyUserHandle = `@${blueskyUserHandle}`
   }
 
   const userId = retrievePrivateMetadataResult.data.userId
@@ -48,7 +52,7 @@ export default async (request: Request, _context: Context) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        identifier: userHandle.replace('@', ''),
+        identifier: blueskyUserHandle.replace('@', ''), // this call has to be without user handle
         password: appPassword,
       }),
     })
@@ -61,10 +65,10 @@ export default async (request: Request, _context: Context) => {
       .from('sociabli_connections')
       .insert({
         user_id: userId,
-        label: `Bluesky - ${userHandle}`,
+        label: `Bluesky - ${blueskyUserHandle}`,
         configuration: {
           userId,
-          userHandle,
+          userHandle: blueskyUserHandle,
           appPassword,
         },
         connection_type: 'bluesky',

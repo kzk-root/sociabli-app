@@ -15,6 +15,7 @@ export default async (request: Request, _context: Context) => {
   const retrievePrivateMetadataResult = await retrievePrivateMetadata({ request })
   const requestBody = await request.json()
   const instanceHostname = new URL(requestBody.mastodonInstance).hostname
+  let mastodonUserHandle = requestBody.mastodonUserHandle
 
   if (!/^https?:\/\/[^ "]+$/.test(requestBody.mastodonInstance)) {
     return Response.json(
@@ -23,11 +24,19 @@ export default async (request: Request, _context: Context) => {
     )
   }
 
-  if (retrievePrivateMetadataResult.success === false) {
-    console.log(
-      '[MastodonCreateConnection] Get user failed',
-      retrievePrivateMetadataResult.error.error
+  if (!mastodonUserHandle || typeof mastodonUserHandle !== 'string') {
+    return Response.json(
+      { message: `Invalid user handle "${mastodonUserHandle}" in request body` },
+      { status: 400 }
     )
+  }
+
+  if (!mastodonUserHandle.startsWith('@')) {
+    mastodonUserHandle = `@${mastodonUserHandle}`
+  }
+
+  if (retrievePrivateMetadataResult.success === false) {
+    console.log('[MastodonCreateConnection] Get failed', retrievePrivateMetadataResult.error.error)
 
     return Response.json(
       { message: retrievePrivateMetadataResult.error.message },
@@ -47,7 +56,7 @@ export default async (request: Request, _context: Context) => {
     return Response.json({ message: 'Instance not found' }, { status: 404 })
   }
 
-  const lookupUrl = `https://${instanceHostname}/api/v1/accounts/lookup?acct=${requestBody.mastodonUserHandle}`
+  const lookupUrl = `https://${instanceHostname}/api/v1/accounts/lookup?acct=${mastodonUserHandle}`
   const tokenUrl = `https://${instanceHostname}/oauth/token`
   const tokenRequestData = {
     client_id: mastodonInstanceData.data[0].client_id,
@@ -94,11 +103,11 @@ export default async (request: Request, _context: Context) => {
       .from('sociabli_connections')
       .insert({
         user_id: userId,
-        label: `${instanceHostname} - ${requestBody.mastodonUserHandle}`,
+        label: `${instanceHostname} - ${mastodonUserHandle}`,
         configuration: {
           accessToken: tokenData.access_token,
           userId: userDetails.id,
-          userHandle: requestBody.mastodonUserHandle,
+          userHandle: mastodonUserHandle,
           userAvatar: userDetails.avatar,
           instanceHostname: instanceHostname,
         },
