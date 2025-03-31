@@ -227,8 +227,8 @@ export const Connections = () => {
             <input
               type={'text'}
               name={'userHandle'}
-              placeholder={'USERNAME.bsky.social or your custom domain'}
-              pattern={'^[a-zA-Z0-9_\\-]{1,60}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$'}
+              placeholder={'@USERNAME.bsky.social or your custom domain'}
+              pattern={'^(@|)[a-zA-Z0-9_\\-]{1,60}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$'}
             />
 
             <label>App password</label>
