@@ -4,6 +4,12 @@ import FunctionEnvVars from 'netlify/functions/utils/FunctionEnvVars.mts'
 
 const clerkClient = createClerkClient({ secretKey: FunctionEnvVars.clerkToken })
 
+/**
+ * Retrieve known workflows to reduce list of allowed connection permutation.
+ *
+ * @param request
+ * @param _context
+ */
 export default async (request: Request, _context: Context) => {
   console.log('[getWorkflows] Start')
 
@@ -25,49 +31,23 @@ export default async (request: Request, _context: Context) => {
         description: 'Sync your Mastodon posts to Bluesky',
         id: 'mastodon_to_bluesky',
         flow: {
-          from: { label: 'Mastodon', icon: 'MastodonIcon' },
-          to: { label: 'Bluesky', icon: 'BlueskyIcon' },
+          from: { label: 'Mastodon', icon: 'mastodon' },
+          to: { label: 'Bluesky', icon: 'bluesky' },
         },
         fields: [
           {
-            id: 'mastodonInstance',
-            name: 'Mastodon Instance',
-            type: 'url',
-            description: 'For example: https://mastodon.social',
-            placeholder: 'https://mastodon.social',
+            id: 'connectionFrom',
+            name: 'Mastodon Connection',
+            type: 'connection',
+            connectionType: 'mastodon',
+            description: 'Select one of your Mastodon connections',
           },
           {
-            id: 'mastodonUser',
-            name: 'Mastodon Username',
-            type: 'text',
-            description: '@username',
-            errorHint: 'The username should be in the format @username',
-            pattern: '^@(.*)$',
-            placeholder: '@username',
-          },
-          {
-            id: 'blueskyUserHandle',
-            name: 'Bluesky User handle',
-            type: 'text',
-            description:
-              'For example: USERNAME.bsky.social - use the full identifier domain bsky.social or your custom domain',
-            errorHint:
-              'The handle should be in the format USERNAME.bsky.social or your custom domain',
-            pattern: '^[a-zA-Z0-9_\\-]{1,60}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$',
-            placeholder: 'USERNAME.bsky.social or your custom domain',
-          },
-          {
-            id: 'blueskyAccessToken',
-            name: 'Bluesky Token',
-            link: {
-              href: 'https://bsky.app/settings/app-passwords',
-              text: 'To Bluesky settings',
-            },
-            type: 'password',
-            placeholder: 'xxxx-xxxx-xxxx-xxxx',
-            description: 'You can get your token from Bluesky settings',
-            errorHint: 'The token should be in the format xxxx-xxxx-xxxx-xxxx',
-            pattern: '^[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}$',
+            id: 'connectionTo',
+            name: 'Bluesky Connection',
+            type: 'connection',
+            connectionType: 'bluesky',
+            description: 'Select one of your Bluesky connections',
           },
         ],
       },

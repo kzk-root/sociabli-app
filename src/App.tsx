@@ -9,6 +9,7 @@ import TermsOfServicePage from '@/pages/terms'
 import PrivacyPage from '@/pages/privacy'
 import ImprintPage from '@/pages/imprint'
 import FaqPage from '@/pages/faq'
+import MastodonCallback from '@/pages/mastodon-callback'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: '/faq', element: <FaqPage /> },
       { path: '/sign-in/*', element: <SignInPage /> },
       { path: '/sign-up/*', element: <SignUpPage /> },
+      { path: '/mastodon-callback', element: <MastodonCallback /> },
       {
         element: <DashboardLayout />,
         path: 'dashboard',
