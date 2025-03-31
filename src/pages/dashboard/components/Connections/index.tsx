@@ -6,11 +6,9 @@ import { ConnectionTypeIcon } from '@/pages/dashboard/components/ConnectionTypeI
 import { Loader } from '@/pages/dashboard/components/Loader'
 import { ShowErrorToast, ShowSuccessToast } from '@/components/toast'
 import log from 'loglevel'
-import { useNavigate } from 'react-router-dom'
 
 export const Connections = () => {
   const { getToken } = useAuth()
-  const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
   const [userConnections, setUserConnections] = useState([])
@@ -101,10 +99,11 @@ export const Connections = () => {
 
   const renderConnection = (connection: any) => {
     const label = connection.label.split(' - ')
+
     return (
       <li key={connection.id}>
-        <div className="flow small-flow">
-          <div className="card">
+        <div className="card-base">
+          <div className="user-connection">
             <ConnectionTypeIcon connectionType={connection.connection_type} />
             <p className="label">
               {label[1]}
@@ -163,10 +162,6 @@ export const Connections = () => {
 
   return (
     <>
-      <ul className={'user-connections'}>
-        {userConnections.map((connection: any) => renderConnection(connection))}
-      </ul>
-
       <h4>Add new connection</h4>
       <ul className={'new-connections'}>
         <li
@@ -236,6 +231,11 @@ export const Connections = () => {
           </form>
         </dialog>
       )}
+
+      <h4>Your connections</h4>
+      <ul className={'user-connections'}>
+        {userConnections.map((connection: any) => renderConnection(connection))}
+      </ul>
     </>
   )
 }
