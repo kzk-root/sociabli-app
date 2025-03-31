@@ -1,6 +1,5 @@
 const EnvVars = () => {
   const appEnv = import.meta.env.VITE_APP_ENV
-  const appVersion = __VERSION__
   const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
   const netlifyFunctions = import.meta.env.VITE_NETLIFY_FUNCTIONS
   const logLevel = import.meta.env.VITE_LOG_LEVEL
@@ -23,7 +22,6 @@ const EnvVars = () => {
 
   return {
     appEnv,
-    appVersion,
     clerkPublishableKey,
     netlifyFunctions,
     logLevel,

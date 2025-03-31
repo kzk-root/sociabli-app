@@ -2,8 +2,6 @@
 
 import { LogLevelDesc } from 'loglevel'
 
-declare const __VERSION__: string
-
 interface ImportMetaEnv {
   readonly VITE_APP_ENV: string
   readonly VITE_CLERK_PUBLISHABLE_KEY: string

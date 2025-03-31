@@ -7,7 +7,6 @@ export default defineConfig({
   plugins: [react()],
   define: {
     __NAME__: `"${pkg.name}"`,
-    __VERSION__: `"${pkg.version}"`,
   },
   resolve: {
     alias: {
