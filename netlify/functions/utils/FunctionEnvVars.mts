@@ -1,14 +1,14 @@
+// secrets from Netlify EnvVars
 const n8nApiUrl = process.env.N8N_API_URL
 const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL
 const n8nReceiveToken = process.env.N8N_RECEIVE_TOKEN
 const n8nSecret = process.env.N8N_SECRET
+const clerkToken = process.env.CLERK_TOKEN
+const supabaseKey = process.env.SUPABASE_KEY
 
+// from default .env
 const mastodonAppRedirectUrl = process.env.MASTODON_APP_REDIRECT_URL
 const mastodonAppScopes = process.env.MASTODON_APP_SCOPES
-
-const clerkToken = process.env.CLERK_TOKEN
-
-const supabaseKey = process.env.SUPABASE_KEY
 
 if (!n8nApiUrl) {
   throw new Error('N8N_API_URL is not defined')
