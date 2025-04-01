@@ -42,6 +42,11 @@ const getWorkflowExecutions = async (
       }
     )
 
+    if (!response.ok) {
+      console.log('[getUserWorkflows] Error fetching workflow executions', response.statusText)
+      return { data: [], nextCursor: null }
+    }
+
     return (await response.json()) as ExecutionResponse
   } catch (error) {
     return { data: [], nextCursor: null }
@@ -111,7 +116,7 @@ export default async (request: Request, _context: Context) => {
         label: workflow.connection_from.label,
       }
 
-      if (n8nWorkflowExecutionResult.data.length === 0) {
+      if (!n8nWorkflowExecutionResult.data || n8nWorkflowExecutionResult.data.length === 0) {
         workflows.push({ id: workflow.id, status: 'pending', connectionTo, connectionFrom })
         continue
       }
