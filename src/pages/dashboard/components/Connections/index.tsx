@@ -228,7 +228,7 @@ export const Connections = () => {
               type={'text'}
               name={'userHandle'}
               placeholder={'@bluesky-handle'}
-              pattern={'^(@|)[a-zA-Z0-9_\\-]{1,60}\\.[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$'}
+              pattern={'^(@|)([a-zA-Z0-9_\\-]{1,60}\\.){0,}[a-zA-Z0-9_]{2,}\\.[a-zA-Z]{2,}$'}
             />
 
             <label>App password</label>
