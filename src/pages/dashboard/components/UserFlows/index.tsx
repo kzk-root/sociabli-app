@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/clerk-react'
-import Tippy from '@tippyjs/react'
 import { ConnectionTypeIcon } from '@/pages/dashboard/components/ConnectionTypeIcon'
 import EnvVars from '@/services/EnvVars.ts'
 import { toast } from 'react-toastify'
@@ -83,18 +82,10 @@ export const UserFlows = () => {
   return (
     <ul className={'user-workflows'}>
       {userWorkflows.map((workflow) => {
-        const statusMsg =
-          workflow.status === 'error'
-            ? 'Your last post could not be cross posted. We will try again later.'
-            : workflow.status
-
         const statusClass = workflow.status === 'error' ? 'error-flow' : 'active-flow'
 
         return (
           <li key={workflow.id}>
-            <Tippy content={statusMsg} placement="top-start">
-              <div className={`status ${workflow.status}`}></div>
-            </Tippy>
             <div className={`flow small-flow ${statusClass}`}>
               <div className="card-base flow-connection card1">
                 <ConnectionTypeIcon connectionType={workflow.connectionFrom.connectionType} />
