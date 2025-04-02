@@ -220,7 +220,7 @@
             display: grid;
             gap: 1rem;
             align-items: center;
-            grid-template-columns: 20px 1fr auto;
+            grid-template-columns: 1fr auto;
             margin: var(--default-margin) 0;
         }
 
