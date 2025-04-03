@@ -11,7 +11,6 @@ import FunctionEnvVars from './utils/FunctionEnvVars.mjs'
 export default async (request: Request, _context: Context) => {
   console.log('[GetUserWorkflowConnections] Start')
 
-  const requestBody = await request.json()
   const authHeader = request.headers.get('Authorization')
   const token = authHeader && authHeader.split(' ')[1]
 
@@ -25,24 +24,25 @@ export default async (request: Request, _context: Context) => {
     return Response.json({ message: 'Wrong provided' }, { status: 401 })
   }
 
-  const sociabliWorkflowId = requestBody.sociabliWorkflowId
+  try {
+    const requestBody = await request.json()
+    const sociabliWorkflowId = requestBody.sociabliWorkflowId
 
-  const mastodonInstanceData = await supabaseClient
-    .from('sociabli_workflows')
-    .select(
-      `
+    const mastodonInstanceData = await supabaseClient
+      .from('sociabli_workflows')
+      .select(
+        `
       connection_from:sociabli_connections!sociabli_workflows_connection_from_fkey(id,configuration),
       connection_to:sociabli_connections!sociabli_workflows_connection_to_fkey(id,configuration)
     `
-    )
-    .eq('id', sociabliWorkflowId)
-    .throwOnError()
+      )
+      .eq('id', sociabliWorkflowId)
+      .throwOnError()
 
-  if (mastodonInstanceData.data.length === 0) {
-    return Response.json({ message: 'Connections not found' }, { status: 404 })
-  }
+    if (mastodonInstanceData.data.length === 0) {
+      return Response.json({ message: 'Connections not found' }, { status: 404 })
+    }
 
-  try {
     return Response.json(mastodonInstanceData.data[0], { status: 201 })
   } catch (e) {
     console.error('[GetUserWorkflowConnections] Error', e)
