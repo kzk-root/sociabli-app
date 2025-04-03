@@ -26,6 +26,12 @@ export default async (request: Request, _context: Context) => {
 
   try {
     const requestBody = await request.json()
+
+    if (!requestBody.sociabliWorkflowId) {
+      console.log('[GetUserWorkflowConnections] Missing sociabliWorkflowId')
+      return Response.json({ message: 'Missing sociabliWorkflowId' }, { status: 400 })
+    }
+
     const sociabliWorkflowId = requestBody.sociabliWorkflowId
 
     const mastodonInstanceData = await supabaseClient
