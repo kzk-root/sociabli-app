@@ -93,7 +93,7 @@ export default async (request: Request, _context: Context) => {
   headers.set('Authorization', FunctionEnvVars.n8nSecret)
 
   // Determine mastodon feed url
-  const feedUrl = `https://${connectionFromResult.data[0].configuration.instanceHostname}/${connectionFromResult.data[0].configuration.userHandle}`
+  const feedUrl = `https://${connectionFromResult.data[0].configuration.instanceHostname}/${connectionFromResult.data[0].configuration.userHandle}.rss`
 
   const result = await fetch(`${FunctionEnvVars.n8nWebhookUrl}/activate-workflow-v2`, {
     method: 'POST',
