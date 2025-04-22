@@ -5,7 +5,6 @@ import BlueskyIcon from '@/components/icons/bluesky.tsx'
 import BlogIcon from '@/components/icons/blog.tsx'
 import LinkedInIcon from '@/components/icons/linkedin.tsx'
 import { useEffect, useState } from 'react'
-import * as constants from 'node:constants'
 
 export default function IndexPage() {
   const [recentPosts, setRecentPosts] = useState([])
