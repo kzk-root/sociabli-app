@@ -4,8 +4,61 @@ import ConnectionIcon from '@/components/icons/connection.tsx'
 import BlueskyIcon from '@/components/icons/bluesky.tsx'
 import BlogIcon from '@/components/icons/blog.tsx'
 import LinkedInIcon from '@/components/icons/linkedin.tsx'
+import { useEffect, useState } from 'react'
+import * as constants from 'node:constants'
 
 export default function IndexPage() {
+  const [recentPosts, setRecentPosts] = useState([])
+
+  const getRecentPosts = async () => {
+    const response = await fetch(
+      'https://mastodon.social/api/v1/accounts/113514326644185172/statuses',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      }
+    )
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    return await response.json()
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getRecentPosts()
+
+        const posts = data
+          .filter((post: any) => post.in_reply_to_id === null)
+          .map((post: any) => {
+            const date = new Date(post.created_at)
+            const createdAt = date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+
+            return {
+              id: post.id,
+              content: post.content,
+              createdAt: createdAt,
+              url: post.url,
+            }
+          })
+
+        setRecentPosts(posts.slice(-5))
+      } catch (error) {
+        console.error('Error fetching recent posts:', error)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <div className="home">
       <div className="container">
@@ -62,36 +115,6 @@ export default function IndexPage() {
             </div>
           </div>
         </section>
-
-        {/*<section>*/}
-        {/*  <h3>Your Blog to Medium</h3>*/}
-        {/*    Publish your blog posts on Medium. Sociabli enables you to define which of your blog*/}
-        {/*    posts should be cross posted to medium.com. Simply install the Sociabli plugin for your*/}
-        {/*    CMS and connect it to Medium. We will take care of canonical links and other details, so*/}
-        {/*    that you won't run into duplicate content on Google and other search engines.*/}
-        {/*  </p>*/}
-
-        {/*  <div className="flow">*/}
-        {/*    <div className="card">*/}
-        {/*      <BlogIcon />*/}
-        {/*      <p className="service">Your blog</p>*/}
-        {/*    </div>*/}
-
-        {/*    <svg*/}
-        {/*      xmlns="http://www.w3.org/2000/svg"*/}
-        {/*      viewBox="0 0 24 24"*/}
-        {/*      fill="currentColor"*/}
-        {/*      className="connection"*/}
-        {/*    >*/}
-        {/*      <path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path>*/}
-        {/*    </svg>*/}
-
-        {/*    <div className="card">*/}
-        {/*      <MediumIcon />*/}
-        {/*      <p className="service">Medium</p>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</section>*/}
 
         <section>
           <h3>More flows will come!</h3>
@@ -174,6 +197,111 @@ export default function IndexPage() {
           </div>
         </section>
       </div>
+      <section id="about" className="container">
+        <div className="about">
+          <div>
+            <h4>The Sociabli Team</h4>
+            <p className={'description'}>
+              Sociabli is a project by <strong>Mark</strong> and <strong>Maurice</strong>. We are
+              software architects and developers from Hamburg.
+            </p>
+            <div className={'card-base profile'}>
+              <img src={'/mark.webp'} alt="Mark" />
+              <div>
+                <p>
+                  <strong>Hi, I'm Mark</strong>. I'm a software architect & developer. I plan
+                  event-driven applications as an architect, as a full stack developer I write the
+                  frontend and backend code.
+                </p>
+                <p className={'links'}>
+                  <span className="socials">
+                    <a href={'https://yadl.info'} target={'_blank'} rel="noopener noreferrer">
+                      <BlogIcon />
+                    </a>{' '}
+                    <a
+                      href={'https://mastodon.social/@mark_schmeiser'}
+                      target={'_blank'}
+                      rel="noopener noreferrer"
+                    >
+                      <MastodonIcon />
+                    </a>{' '}
+                    <a
+                      href={'https://bsky.app/profile/mark-schmeiser.bsky.social'}
+                      target={'_blank'}
+                      rel="noopener noreferrer"
+                    >
+                      <BlueskyIcon />
+                    </a>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className={'card-base profile'}>
+              <img src={'/maurice-profile.png'} alt="Maurice" />
+              <div>
+                <p>
+                  <strong>Hi, I'm Maurice</strong>. I walk the border between two worlds, dealing
+                  with technologies and the IndieWeb on the one hand and with media and online
+                  publishing on the other.
+                </p>
+                <p className={'links'}>
+                  <span className="socials">
+                    <a
+                      href={'https://maurice-renck.de'}
+                      target={'_blank'}
+                      rel="noopener noreferrer"
+                    >
+                      <BlogIcon />
+                    </a>{' '}
+                    <a
+                      href={'https://mastodon.online/mauricerenck'}
+                      target={'_blank'}
+                      rel="noopener noreferrer"
+                    >
+                      <MastodonIcon />
+                    </a>{' '}
+                    <a
+                      href={'https://bsky.app/profile/mauricerenck.de'}
+                      target={'_blank'}
+                      rel="noopener noreferrer"
+                    >
+                      <BlueskyIcon />
+                    </a>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className={'recent-posts'}>
+            <h4>Recent updates</h4>
+            <p className="description">
+              Follow us on <a href={'https://mastodon.social/@sociabli'}>Mastodon</a> or{' '}
+              <a href={'https://bsky.app/profile/sociab.li'}>Bluesky</a> to get the latest updates
+              about Sociabli.
+            </p>
+            <ul>
+              {recentPosts.map((post: any) => (
+                <li key={post.id}>
+                  <p dangerouslySetInnerHTML={{ __html: post.content }} />
+
+                  <div className="meta">
+                    <a href={post.url} target="_blank" rel="noopener noreferrer">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M18.3638 15.5355L16.9496 14.1213L18.3638 12.7071C20.3164 10.7545 20.3164 7.58866 18.3638 5.63604C16.4112 3.68341 13.2453 3.68341 11.2927 5.63604L9.87849 7.05025L8.46428 5.63604L9.87849 4.22182C12.6122 1.48815 17.0443 1.48815 19.778 4.22182C22.5117 6.95549 22.5117 11.3876 19.778 14.1213L18.3638 15.5355ZM15.5353 18.364L14.1211 19.7782C11.3875 22.5118 6.95531 22.5118 4.22164 19.7782C1.48797 17.0445 1.48797 12.6123 4.22164 9.87868L5.63585 8.46446L7.05007 9.87868L5.63585 11.2929C3.68323 13.2455 3.68323 16.4113 5.63585 18.364C7.58847 20.3166 10.7543 20.3166 12.7069 18.364L14.1211 16.9497L15.5353 18.364ZM14.8282 7.75736L16.2425 9.17157L9.17139 16.2426L7.75717 14.8284L14.8282 7.75736Z"></path>
+                      </svg>
+                    </a>
+                    <span>{post.createdAt}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

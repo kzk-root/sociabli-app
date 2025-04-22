@@ -17,6 +17,7 @@
     .sticky {
         position: sticky;
         top: 20px;
+        z-index: 999999;
     }
 
 
@@ -48,5 +49,106 @@
         font-size: 2rem;
         color: #444444;
         margin: 6rem 0 2rem 0;
+    }
+
+    h4 {
+        font-size:1.4rem;
+        color: #444444;
+        margin: 6rem 0 2rem 0;
+    }
+
+    .about {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+
+    }
+    .profile {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        align-items: start;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: none;
+
+        .links {
+            display: flex;
+            justify-items: end;
+            justify-content: end;
+        }
+
+        .socials {
+            background: #e4f3fb;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        a {
+            display: inline-block;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .about {
+       .description {
+            background-color: #f4f4f4;
+            margin-bottom: 2.5rem;
+
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+    }
+
+    .recent-posts {
+
+        .description {
+            background-color: #e4f3fb;
+            margin-bottom: 2.5rem;
+
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            margin-top: 1rem;
+            color: gray;
+        }
+
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 2rem;
+        }
     }
 }
