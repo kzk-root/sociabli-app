@@ -306,8 +306,8 @@ export default function IndexPage() {
           kofiWidgetOverlay.draw('sociabli', {
             'type': 'floating-chat',
             'floating-chat.donateButton.text': 'Support Us',
-            'floating-chat.donateButton.background-color': '#fcbf47',
-            'floating-chat.donateButton.text-color': '#323842'
+            'floating-chat.donateButton.background-color': '#f98a29',
+            'floating-chat.donateButton.text-color': '#ffffff'
           });
         </script>
     </div>
