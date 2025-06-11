@@ -39,6 +39,16 @@ export default function DashboardPage() {
           We would love to hear from you. If you have any feedback, questions or ideas, please get
           in touch at <a href="mailto:support@sociab.li">support@sociab.li</a>
         </p>
+
+        <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+        <script>
+          kofiWidgetOverlay.draw('sociabli', {
+            'type': 'floating-chat',
+            'floating-chat.donateButton.text': 'Support Us',
+            'floating-chat.donateButton.background-color': '#fcbf47',
+            'floating-chat.donateButton.text-color': '#323842'
+          });
+        </script>
       </div>
     </>
   )
