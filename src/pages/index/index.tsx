@@ -58,6 +58,8 @@ export default function IndexPage() {
     fetchData()
   }, [])
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <div className="home">
       <div className="container">
@@ -301,15 +303,6 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
-      <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-        <script>
-          kofiWidgetOverlay.draw('sociabli', {
-            'type': 'floating-chat',
-            'floating-chat.donateButton.text': 'Support Us',
-            'floating-chat.donateButton.background-color': '#f98a29',
-            'floating-chat.donateButton.text-color': '#ffffff'
-          });
-        </script>
     </div>
   )
 }
