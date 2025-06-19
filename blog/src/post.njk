@@ -14,10 +14,10 @@ eleventyComputed:
   <h1>{{ post.title }}</h1>
 
   <time class="published date dt-published"
-        itemprop="datePublished"
-        datetime="{{ post.date | date('yyyy-m-d H:i:s') }}">
-        {{ post.date | date('dd.mm.yyyy') }}
-    </time>
+      itemprop="datePublished"
+      datetime="{{ post.date | date('yyyy-m-d H:i:s') }}">
+      {{ post.date | date('dd.mm.yyyy') }}
+  </time>
 
   <div class="intro">
     {{ post.intro | markdown | safe }}
