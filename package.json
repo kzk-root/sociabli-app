@@ -25,7 +25,7 @@
     "commitlinter": "commitlint -e $1",
     "stagelinter": "lint-staged",
     "build:11ty": "cd blog && npm install && npx @11ty/eleventy",
-    "copy:blog": "cp -r blog/dist/blog react-app/dist/blog"
+    "copy:blog": "cp -r blog/dist/blog dist/blog"
   },
   "dependencies": {
     "@atproto/api": "^0.14.2",
