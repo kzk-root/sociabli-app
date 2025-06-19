@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{{ title }} - Sociabli</title>
+
+  <meta name="description" content="{{ intro }}">
+  <meta name="robots" content="index, follow">
+
+  <!-- Dublin Core -->
+  <meta name="DC.Title" content="{{ title }}">
+  <meta name="DC.Creator" content="konzentrik GmbH">
+  <meta name="DC.Rights" content="konzentrik GmbH">
+  <meta name="DC.Publisher" content="konzentrik GmbH">
+  <meta name="DC.Description"content="{{ intro }}">
+  <meta name="DC.Language" content="en">
+  <meta name="DC.Type" content="Text">
+  <meta name="DC.Format" content="text/html">
+  <meta name="DC.Identifier" content="https://sociab.li">
+
+  <!-- Open Graph Basics -->
+  <meta property="og:url" content="https://sociab.li">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description"content="{{ intro }}">
+  <meta property="og:site_name" content="Sociabli">
+  <meta property="og:locale" content="en">
+
+  <meta property="og:type" content="website">
+
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+
+
+  <script defer src="https://umami.mauricerenck.de/script.js"
+          data-website-id="b260f8db-9cbc-4c09-b9fd-c3d795d5ce6f"></script>
+  <script type="module" crossorigin src="/assets/index.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index.css">
+
+  <style>
+
+.text-only-page {
+    margin: 150px 0;
+
+    p {
+       line-height: 1.5;
+    }
+
+    .intro {
+        font-size: 1.5rem;
+        margin: 1rem 0 3rem 0;
+    }
+
+    margin-bottom: 3rem;
+}
+    .blog-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 150px 0;
+
+        li {
+            margin-bottom: 120px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 120px;
+        }
+
+        h2 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        a {
+          transition: color 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            display: block;
+
+            &:hover {
+                color: #f98a29;
+            }
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+    <header><img src="/sociabli.svg" alt="Sociabli"><h1>Sociabli</h1></header>
+    <p class="description-md"><strong>Sociabli</strong> helps you to share your content online. Post once and let Sociabli sync to other services and platforms. Right now Sociabli can use your Blog and Mastodon account as sources, but we are working on more!</p>
+
+  <main>
+    {{ content | safe }}
+  </main>
+</div>
+<script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('sociabli', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'Support Us',
+    'floating-chat.donateButton.background-color': '#f98a29',
+    'floating-chat.donateButton.text-color': '#ffffff'
+  });
+</script>
+</body>
+</html>

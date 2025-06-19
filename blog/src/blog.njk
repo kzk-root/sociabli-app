@@ -1,0 +1,26 @@
+---
+title: Blog
+intro: Sociabli helps you to share your content online. Post once and let Sociabli sync to other services and platforms. Right now Sociabli can use your Blog and Mastodon account as sources, but we are working on more!
+layout: layouts/base.njk
+---
+
+{% block test %}
+    <ul class="blog-list">
+    {% for post in posts %}
+    <li>
+        <a href="/blog/{{ post.date | date('yyyy') }}/{{ post.slug }}/">
+        <h2>{{ post.title }}</h2>
+        </a>
+        <p>{{ post.intro }}</p>
+    </li>
+    {% endfor %}
+    </ul>
+
+    {% if pagination.pageNumber > 0 %}
+    <a href="/blog/page/{{ pagination.pageNumber }}">Previous</a>
+    {% endif %}
+
+    {% if pagination.pageNumber + 1 < pagination.pages %}
+    <a href="/blog/page/{{ pagination.pageNumber + 2 }}">Next</a>
+    {% endif %}
+{% endblock %}

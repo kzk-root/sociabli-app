@@ -14,7 +14,8 @@
   "scripts": {
     "audit": "better-npm-audit audit",
     "start:dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run build:react && npm run build:11ty && npm run copy:blog",
+    "build:react": "tsc && vite build",
     "preview": "vite preview",
     "ts": "tsc --noEmit",
     "test": "echo \"No test specified\"",
@@ -22,7 +23,9 @@
     "cspell:populate": "cspell --words-only --unique \"**/*.{ts,tsx}\" | sort --ignore-case >> cspell-words.txt",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "commitlinter": "commitlint -e $1",
-    "stagelinter": "lint-staged"
+    "stagelinter": "lint-staged",
+    "build:11ty": "cd blog && npm install && npx @11ty/eleventy",
+    "copy:blog": "cp -r blog/dist/blog react-app/dist/blog"
   },
   "dependencies": {
     "@atproto/api": "^0.14.2",

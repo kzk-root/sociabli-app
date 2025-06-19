@@ -1,0 +1,19 @@
+{
+  "name": "blogtest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.1",
+    "@11ty/eleventy-fetch": "^5.1.0",
+    "luxon": "^3.6.1",
+    "markdown-it": "^14.1.0"
+  }
+}

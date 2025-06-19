@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: posts
+  size: 1
+  alias: post
+permalink: "blog/{{ post.date | date('yyyy') }}/{{ post.slug }}/index.html"
+eleventyComputed:
+  title: "{{ post.title }}"
+  intro: "{{ post.intro }}"
+---
+{% block content %}
+<article class="text-only-page">
+  <h1>{{ post.title }}</h1>
+
+  <time class="published date dt-published"
+        itemprop="datePublished"
+        datetime="{{ post.date | date('yyyy-m-d H:i:s') }}">
+        {{ post.date | date('dd.mm.yyyy') }}
+    </time>
+
+  <div class="intro">
+    {{ post.intro | markdown | safe }}
+  </div>
+  <div>{{ post.content | markdown | safe }}</div>
+</article>
+{% endblock %}
