@@ -6,8 +6,10 @@ module.exports = async function () {
     type: 'json',
   })
 
-  return data.map((post) => ({
-    ...post,
-    date: new Date(post.date),
-  }))
+  return data
+    .map((post) => ({
+      ...post,
+      date: new Date(post.date),
+    }))
+    .reverse() // Reverse the order to have the latest posts first
 }
