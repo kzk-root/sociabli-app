@@ -16,7 +16,9 @@ export default function RootLayout() {
       <header className="page">
         <nav>
           <Link to="/">Sociabli</Link>
-          <Link to="/blog">Blog</Link>
+          <a href={'https://sociab.li/blog'} target="_blank">
+            Blog
+          </a>
           <SignedIn>
             <Link to="/dashboard">Dashboard</Link>
             <UserButton />
