@@ -16,6 +16,7 @@ export default function RootLayout() {
       <header className="page">
         <nav>
           <Link to="/">Sociabli</Link>
+          <Link to="/blog">Blog</Link>
           <SignedIn>
             <Link to="/dashboard">Dashboard</Link>
             <UserButton />
