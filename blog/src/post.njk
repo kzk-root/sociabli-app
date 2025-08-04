@@ -22,6 +22,6 @@ eleventyComputed:
   <div class="intro">
     {{ post.intro | markdown | safe }}
   </div>
-  <div>{{ post.content | safe }}</div>
+  <div>{{ post.content.html | safe }}</div>
 </article>
 {% endblock %}
