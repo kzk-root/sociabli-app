@@ -1,5 +1,6 @@
 const markdownIt = require('markdown-it')
 const { DateTime } = require('luxon')
+const { feedPlugin } = require('@11ty/eleventy-plugin-rss')
 
 module.exports = function (eleventyConfig) {
   const md = new markdownIt()
