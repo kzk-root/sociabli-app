@@ -14,7 +14,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addPlugin(feedPlugin, {
     type: 'rss', // or "atom", "json"
-    outputPath: '/feed.xml',
+    outputPath: '/blog/feed.rss',
     collection: {
       name: 'posts', // your collection name
       limit: 10, // number of items in the feed
