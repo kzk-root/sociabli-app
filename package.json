@@ -14,7 +14,7 @@
   "scripts": {
     "audit": "better-npm-audit audit",
     "start:dev": "vite",
-    "build": "npm run build:react && npm run build:11ty && npm run copy:blog",
+    "build": "npm run build:react && npm run build:11ty && npm run copy:blog && npm run copy:rss",
     "build:react": "tsc && vite build",
     "preview": "vite preview",
     "ts": "tsc --noEmit",
@@ -25,7 +25,8 @@
     "commitlinter": "commitlint -e $1",
     "stagelinter": "lint-staged",
     "build:11ty": "cd blog && npm install && npx @11ty/eleventy",
-    "copy:blog": "cp -r blog/dist/blog dist/blog"
+    "copy:blog": "cp -r blog/dist/blog dist/blog",
+    "copy:rss": "cp -r blog/dist/feed.xml dist/blog/feed.xml",
   },
   "dependencies": {
     "@atproto/api": "^0.14.2",
