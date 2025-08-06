@@ -17,7 +17,7 @@ eleventyComputed:
   <div class="meta">
     {% if post.author %}
       <div class="h-card">
-        <a class="p-name u-url" href="{{ post.authorUrl }}" itemprop="author">Joe Bloggs</a>
+        <a class="p-name u-url" href="{{ post.authorUrl }}" itemprop="author">{{ post.author }}</a>
 
         {% if post.authorMastodon %}
           <a href="{{ post.authorMastodon }}" target="_blank" rel="noopener noreferrer">
