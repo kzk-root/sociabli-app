@@ -8,13 +8,22 @@
         line-height: 1.2;
     }
 
-    p {
+    h2,h3,h4,h5,h6 {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    p, ul, ol {
         font-size: 1.25rem;
         color: #333;
         line-height: 1.5;
         max-width: 800px;
         margin: 0 auto;
         margin-bottom: 1.5rem;
+    }
+
+    li > p {
+        margin: 0;
     }
 
     figure {
@@ -157,6 +166,11 @@
 
 .blog-header {
     text-align: center;
+
+    img {
+        max-width: 250px;
+        height: auto;
+    }
 }
 
 .blog-list {
