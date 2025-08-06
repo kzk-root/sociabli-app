@@ -16,16 +16,18 @@ export default function RootLayout() {
       <header className="page">
         <nav>
           <Link to="/">Sociabli</Link>
-          <a href={'https://sociab.li/blog'} target="_blank">
-            Blog
-          </a>
-          <SignedIn>
-            <Link to="/dashboard">Dashboard</Link>
-            <UserButton />
-          </SignedIn>
-          <SignedOut>
-            <Link to="/sign-in">Sign In</Link>
-          </SignedOut>
+          <div className={'nav-links'}>
+            <a href={'https://sociab.li/blog'} target="_blank">
+              Blog
+            </a>
+            <SignedIn>
+              <Link to="/dashboard">Dashboard</Link>
+              <UserButton />
+            </SignedIn>
+            <SignedOut>
+              <Link to="/sign-in">Sign In</Link>
+            </SignedOut>
+          </div>
         </nav>
       </header>
       <main>
