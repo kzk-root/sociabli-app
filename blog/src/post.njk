@@ -11,8 +11,8 @@ eleventyComputed:
   intro: "{{ post.intro }}"
 ---
 {% block content %}
-<article class="text-only-page post">
-  <h1>{{ post.title }}</h1>
+<article class="text-only-page post h-entry">
+  <h1 class="p-name">{{ post.title }}</h1>
 
   <div class="meta">
     {% if post.author %}
@@ -38,10 +38,10 @@ eleventyComputed:
         {{ post.date | date('dd.MM.yyyy') }}
     </time>
   </div>
-  <div class="intro">
+  <div class="intro p-summary">
     {{ post.intro | markdown | safe }}
   </div>
-  <div>{{ post.content.value | safe }}</div>
+  <div class="e-content">{{ post.content.value | safe }}</div>
 
   <aside>
     <p>Want to stay up to date with Sociabli? <a href="https://sociab.li/blog/feed.xml">Subscribe to our RSS feed</a><br>or follow us on <a href="https://mastodon.social/@sociabli">Mastodon</a> and <a href="https://bsky.app/profile/sociab.li">Bluesky</a>.</p>
