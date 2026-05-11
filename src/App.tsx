@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RootLayout from '@/components/RootLayout.tsx'
 import DashboardLayout from '@/components/DashboardLayout.tsx'
-import SignInPage from '@/pages/signIn'
-import SignUpPage from '@/pages/signUp'
 import DashboardPage from '@/pages/dashboard'
 import IndexPage from '@/pages/index'
 import TermsOfServicePage from '@/pages/terms'
@@ -20,8 +18,6 @@ const router = createBrowserRouter([
       { path: '/privacy', element: <PrivacyPage /> },
       { path: '/imprint', element: <ImprintPage /> },
       { path: '/faq', element: <FaqPage /> },
-      { path: '/sign-in/*', element: <SignInPage /> },
-      { path: '/sign-up/*', element: <SignUpPage /> },
       { path: '/mastodon-callback', element: <MastodonCallback /> },
       {
         element: <DashboardLayout />,

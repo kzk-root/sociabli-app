@@ -1,4 +1,3 @@
-import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import MastodonIcon from '@/components/icons/mastodon.tsx'
 import ConnectionIcon from '@/components/icons/connection.tsx'
 import BlueskyIcon from '@/components/icons/bluesky.tsx'
@@ -74,18 +73,23 @@ export default function IndexPage() {
           Mastodon account as sources, but we are working on more!
         </p>
 
-        <p className="centered sticky">
-          <SignedIn>
-            <a href="/dashboard" className="btn btn-primary">
-              Open Dashboard
-            </a>
-          </SignedIn>
-          <SignedOut>
-            <a href="/sign-up" className="btn btn-primary">
-              Join beta phase
-            </a>
-          </SignedOut>
+        <p className="description-md">
+          <strong>On hold.</strong> We are pausing our service. We are working on a new solution to
+          bring it back in a more sustainable way.
         </p>
+
+        {/*<p className="centered sticky">*/}
+        {/*  <SignedIn>*/}
+        {/*    <a href="/dashboard" className="btn btn-primary">*/}
+        {/*      Open Dashboard*/}
+        {/*    </a>*/}
+        {/*  </SignedIn>*/}
+        {/*  <SignedOut>*/}
+        {/*    <a href="/sign-up" className="btn btn-primary">*/}
+        {/*      Join beta phase*/}
+        {/*    </a>*/}
+        {/*  </SignedOut>*/}
+        {/*</p>*/}
         <section>
           <h3>Cross post from Mastodon to Bluesky</h3>
           <p className="description">

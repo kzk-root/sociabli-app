@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react'
+import { ClerkProvider } from '@clerk/clerk-react'
 import EnvVars from '@/services/EnvVars.ts'
 import { ToastContainer } from 'react-toastify'
 
@@ -20,13 +20,13 @@ export default function RootLayout() {
             <a href={'https://sociab.li/blog'} target="_blank">
               Blog
             </a>
-            <SignedIn>
-              <Link to="/dashboard">Dashboard</Link>
-              <UserButton />
-            </SignedIn>
-            <SignedOut>
-              <Link to="/sign-in">Sign In</Link>
-            </SignedOut>
+            {/*<SignedIn>*/}
+            {/*  <Link to="/dashboard">Dashboard</Link>*/}
+            {/*  <UserButton />*/}
+            {/*</SignedIn>*/}
+            {/*<SignedOut>*/}
+            {/*  <Link to="/sign-in">Sign In</Link>*/}
+            {/*</SignedOut>*/}
           </div>
         </nav>
       </header>
